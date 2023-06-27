@@ -1,15 +1,15 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { ApiGatewayService } from './api-gateway.service';
-import { Observable } from 'rxjs';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { UserEntity } from 'libs/entities/user.entity';
+import { Observable } from 'rxjs';
+import { ApiGatewayService } from './api-gateway.service';
 
 @Controller()
 export class ApiGatewayController {
   constructor(private readonly apiGatewayService: ApiGatewayService) {}
 
-  @Get()
-  getHello(): Observable<UserEntity> {
-    return this.apiGatewayService.getUser();
+  @Get('/getUser/:id')
+  getHello(@Param('id') id: string): Observable<UserEntity> {
+    return this.apiGatewayService.getUser(id);
   }
 
   @Post()

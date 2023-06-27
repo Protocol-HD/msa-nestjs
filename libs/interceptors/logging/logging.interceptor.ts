@@ -39,8 +39,10 @@ export class LoggingInterceptor implements NestInterceptor {
         }),
       );
     } else if (type === 'rpc') {
-      const [, res] = context.getArgs();
-      Logger.log(`Request: ${JSON.stringify(res.args[1])}`);
+      const [req, res] = context.getArgs();
+      Logger.log(
+        `Request: ${JSON.stringify(res.args[1])} ${JSON.stringify(req)}`,
+      );
 
       return next.handle().pipe(
         tap((context: any) => {

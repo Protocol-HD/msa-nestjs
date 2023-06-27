@@ -10,8 +10,8 @@ export class ApiGatewayService {
     @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
   ) {}
 
-  getUser(): Observable<UserEntity> {
-    return this.userClient.send({ cmd: 'user' }, '');
+  getUser(id: string): Observable<UserEntity> {
+    return this.userClient.send({ cmd: 'user' }, id);
   }
 
   getBoard(): Observable<string> {
