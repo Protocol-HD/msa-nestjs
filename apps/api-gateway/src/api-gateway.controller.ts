@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateUserDto } from 'apps/user/src/dto/create-user.dto';
 import { UserEntity } from 'libs/entities/user.entity';
 import { Observable } from 'rxjs';
@@ -11,5 +11,10 @@ export class ApiGatewayController {
   @Post('/createUser')
   createUser(@Body() createUserDto: CreateUserDto): Observable<UserEntity> {
     return this.apiGatewayService.createUser(createUserDto);
+  }
+
+  @Get('/getUsers')
+  getUsers(): Observable<UserEntity[]> {
+    return this.apiGatewayService.getUsers();
   }
 }

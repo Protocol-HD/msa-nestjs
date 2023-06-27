@@ -1,12 +1,17 @@
 import { Controller } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateUserCommand } from './command/create-user.command';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserEntity } from 'libs/entities/user.entity';
+import { GetUsersQuery } from './query/get-users.query';
 
 @Controller()
 export class UserController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @MessagePattern({ cmd: 'createUser' })
   async createUser(data: CreateUserDto): Promise<any> {
@@ -14,5 +19,10 @@ export class UserController {
     return await this.commandBus.execute(
       new CreateUserCommand(name, email, password),
     );
+  }
+
+  @MessagePattern({ cmd: 'getUsers' })
+  async getUsers(): Promise<UserEntity[]> {
+    return await this.queryBus.execute(new GetUsersQuery());
   }
 }

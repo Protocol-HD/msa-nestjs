@@ -6,6 +6,7 @@ import { UserEntity } from 'libs/entities/user.entity';
 import { UserController } from './user.controller';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
+import { GetUsersQueryHandler } from './query/get-users-query.handler';
 
 @Module({
   imports: [
@@ -25,6 +26,10 @@ import { CreateUserEventHandler } from './event/create-user-event.handler';
     CqrsModule,
   ],
   controllers: [UserController],
-  providers: [CreateUserCommandHandler, CreateUserEventHandler],
+  providers: [
+    CreateUserCommandHandler,
+    CreateUserEventHandler,
+    GetUsersQueryHandler,
+  ],
 })
 export class UserModule {}

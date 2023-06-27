@@ -13,4 +13,8 @@ export class ApiGatewayService {
   createUser(createUserDto: CreateUserDto): Observable<UserEntity> {
     return this.userClient.send({ cmd: 'createUser' }, createUserDto);
   }
+
+  getUsers(): Observable<UserEntity[]> {
+    return this.userClient.send({ cmd: 'getUsers' }, {});
+  }
 }
