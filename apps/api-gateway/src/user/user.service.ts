@@ -5,7 +5,7 @@ import { UserEntity } from 'libs/entities/user.entity';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class ApiGatewayService {
+export class UserService {
   constructor(
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
   ) {}
