@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
 import { ConfigModule } from '@nestjs/config';
+import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'libs/entities/user.entity';
+import { UserController } from './user.controller';
+import { CreateUserCommandHandler } from './command/create-user-command.handler';
+import { CreateUserEventHandler } from './event/create-user-event.handler';
 
 @Module({
   imports: [
@@ -20,8 +22,9 @@ import { UserEntity } from 'libs/entities/user.entity';
       entities: [UserEntity],
     }),
     TypeOrmModule.forFeature([UserEntity]),
+    CqrsModule,
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [CreateUserCommandHandler, CreateUserEventHandler],
 })
 export class UserModule {}
