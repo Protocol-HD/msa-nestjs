@@ -11,14 +11,13 @@ import { GetUserQueryHandler } from './query/get-user-query.handler';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'gudehd',
+      database: 'test_user',
       synchronize: true,
       logging: true,
       entities: [UserEntity],
