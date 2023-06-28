@@ -13,12 +13,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(
-    loginInput: LoginAuthInput,
-  ): Promise<LoginAuthOutput | HttpException> {
+  async login(input: LoginAuthInput): Promise<LoginAuthOutput | HttpException> {
     const observableData = this.userClient.send(
       { cmd: 'getUser' },
-      loginInput.email,
+      input.email,
     );
 
     const user: UserEntity = await firstValueFrom(observableData);
@@ -29,7 +27,7 @@ export class AuthService {
 
     const isCorrectPassword = await argon2.verify(
       user.password,
-      loginInput.password,
+      input.password,
     );
 
     if (!isCorrectPassword) {

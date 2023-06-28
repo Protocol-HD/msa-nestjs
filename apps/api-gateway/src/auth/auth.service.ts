@@ -9,7 +9,7 @@ export class AuthService {
     @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
   ) {}
 
-  login(loginInput: LoginAuthInput): Observable<LoginAuthOutput> {
-    return this.authClient.send({ cmd: 'login' }, loginInput);
+  login(input: LoginAuthInput): Observable<LoginAuthOutput> {
+    return this.authClient.send({ cmd: 'login' }, input);
   }
 }

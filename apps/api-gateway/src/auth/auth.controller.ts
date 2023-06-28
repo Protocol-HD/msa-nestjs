@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/login')
-  login(@Body() loginInput: LoginAuthInput): Observable<LoginAuthOutput> {
-    return this.authService.login(loginInput);
+  login(@Body() input: LoginAuthInput): Observable<LoginAuthOutput> {
+    return this.authService.login(input);
   }
 }

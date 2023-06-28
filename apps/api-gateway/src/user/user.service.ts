@@ -10,8 +10,8 @@ export class UserService {
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
   ) {}
 
-  createUser(createUserDto: CreateUserDto): Observable<UserEntity> {
-    return this.userClient.send({ cmd: 'createUser' }, createUserDto);
+  createUser(input: CreateUserDto): Observable<UserEntity> {
+    return this.userClient.send({ cmd: 'createUser' }, input);
   }
 
   getUsers(): Observable<UserEntity[]> {

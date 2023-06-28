@@ -10,8 +10,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/createUser')
-  createUser(@Body() createUserDto: CreateUserDto): Observable<UserEntity> {
-    return this.userService.createUser(createUserDto);
+  createUser(@Body() input: CreateUserDto): Observable<UserEntity> {
+    return this.userService.createUser(input);
   }
 
   @Get('/getUsers')

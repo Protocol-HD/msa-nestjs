@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @MessagePattern({ cmd: 'login' })
-  login(loginInput: LoginAuthInput): Promise<LoginAuthOutput | HttpException> {
-    return this.authService.login(loginInput);
+  login(input: LoginAuthInput): Promise<LoginAuthOutput | HttpException> {
+    return this.authService.login(input);
   }
 }
