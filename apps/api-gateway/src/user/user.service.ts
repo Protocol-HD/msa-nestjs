@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateUserDto } from 'apps/user/src/dto/create-user.dto';
 import { UserEntity } from 'libs/entities/user.entity';
 import { Observable } from 'rxjs';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {

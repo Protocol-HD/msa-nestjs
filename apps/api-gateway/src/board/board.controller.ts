@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { Observable } from 'rxjs';
-import { CreateBoardDto } from 'apps/board/src/dto/create-board.dto';
 import { BoardEntity } from 'libs/entities/board.entity';
 import { UserGuard } from 'libs/auth/auth.guard';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('board')
 export class BoardController {

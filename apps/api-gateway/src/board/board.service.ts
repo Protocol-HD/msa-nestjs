@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateBoardDto } from 'apps/board/src/dto/create-board.dto';
 import { BoardEntity } from 'libs/entities/board.entity';
 import { Observable } from 'rxjs';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardService {

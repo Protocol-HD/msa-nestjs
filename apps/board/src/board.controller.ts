@@ -1,6 +1,5 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { CreateBoardDto } from './dto/create-board.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateBoardCommand } from './command/create-board.command';
 import { BoardEntity } from 'libs/entities/board.entity';
@@ -14,7 +13,7 @@ export class BoardController {
   ) {}
 
   @MessagePattern({ cmd: 'createBoard' })
-  async createBoard(data: CreateBoardDto): Promise<string> {
+  async createBoard(data: CreateBoardCommand): Promise<string> {
     const { title, content, email } = data;
     return await this.commandBus.execute(
       new CreateBoardCommand(title, content, email),
