@@ -5,6 +5,7 @@ import { BoardEntity } from 'libs/entities/board.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
+import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { CqrsModule } from '@nestjs/cqrs';
     CqrsModule,
   ],
   controllers: [BoardController],
-  providers: [CreateBoardCommandHandler],
+  providers: [CreateBoardCommandHandler, GetBoardsQueryHandler],
 })
 export class BoardModule {}

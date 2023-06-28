@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { Observable } from 'rxjs';
 import { CreateBoardDto } from 'apps/board/src/dto/create-board.dto';
@@ -17,5 +17,10 @@ export class BoardController {
   ): Observable<BoardEntity> {
     input.email = req.user.email;
     return this.boardService.createBoard(input);
+  }
+
+  @Get('/getBoards')
+  getBoards(): Observable<BoardEntity[]> {
+    return this.boardService.getBoards();
   }
 }

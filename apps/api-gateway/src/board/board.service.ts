@@ -13,4 +13,8 @@ export class BoardService {
   createBoard(input: CreateBoardDto): Observable<BoardEntity> {
     return this.boardClient.send({ cmd: 'createBoard' }, input);
   }
+
+  getBoards(): Observable<BoardEntity[]> {
+    return this.boardClient.send({ cmd: 'getBoards' }, {});
+  }
 }
