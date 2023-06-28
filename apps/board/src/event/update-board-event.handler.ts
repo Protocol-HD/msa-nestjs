@@ -1,21 +1,28 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { UpdateAuthorBoardEvent } from './update-author-board.event';
+import { UpdateBoardAuthorEvent } from './update-board-author.event';
+import { InjectRepository } from '@nestjs/typeorm';
+import { BoardEntity } from 'libs/entities/board.entity';
+import { Repository } from 'typeorm';
 
-@EventsHandler(UpdateAuthorBoardEvent)
+@EventsHandler(UpdateBoardAuthorEvent)
 export class UpdateBoardEventHandler
-  implements IEventHandler<UpdateAuthorBoardEvent>
+  implements IEventHandler<UpdateBoardAuthorEvent>
 {
-  handle(event: UpdateAuthorBoardEvent) {
+  constructor(
+    @InjectRepository(BoardEntity)
+    private readonly boardRepository: Repository<BoardEntity>,
+  ) {}
+
+  handle(event: UpdateBoardAuthorEvent) {
     switch (event.name) {
-      case UpdateAuthorBoardEvent.name:
-        this.updateAuthorBoard();
+      case UpdateBoardAuthorEvent.name:
+        this.boardRepository.update(
+          { userId: event.userId },
+          { author: event.author },
+        );
         break;
       default:
         break;
     }
-  }
-
-  updateAuthorBoard() {
-    console.log('updateAuthorBoard');
   }
 }

@@ -8,6 +8,8 @@ import { CreateUserEventHandler } from './event/create-user-event.handler';
 import { GetUserQueryHandler } from './query/get-user-query.handler';
 import { GetUsersQueryHandler } from './query/get-users-query.handler';
 import { UserController } from './user.controller';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { UpdateUserEventHandler } from './event/update-user-event.handler';
 
 @Module({
   imports: [
@@ -23,6 +25,13 @@ import { UserController } from './user.controller';
       entities: [UserEntity],
     }),
     TypeOrmModule.forFeature([UserEntity]),
+    ClientsModule.register([
+      {
+        name: 'BOARD_SERVICE',
+        transport: Transport.TCP,
+        options: { port: 3002 },
+      },
+    ]),
     CqrsModule,
   ],
   controllers: [UserController],
@@ -32,6 +41,7 @@ import { UserController } from './user.controller';
     GetUsersQueryHandler,
     GetUserQueryHandler,
     UpdateUserCommandHandler,
+    UpdateUserEventHandler,
   ],
 })
 export class UserModule {}

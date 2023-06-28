@@ -25,7 +25,7 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'createUser' })
-  async createUser(data: CreateUserCommand): Promise<any> {
+  async createUser(data: CreateUserCommand): Promise<UserEntity> {
     const { name, email, password, role } = data;
     return await this.commandBus.execute(
       new CreateUserCommand(name, email, password, role),
@@ -33,7 +33,7 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'updateUser' })
-  async updateUser(data: UpdateUserCommand): Promise<any> {
+  async updateUser(data: UpdateUserCommand): Promise<UserEntity> {
     const { id, name, password, role } = data;
     return await this.commandBus.execute(
       new UpdateUserCommand(id, name, password, role),

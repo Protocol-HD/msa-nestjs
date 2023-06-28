@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BoardEntity } from 'libs/entities/board.entity';
 import { BoardController } from './board.controller';
 import { CreateBoardCommandHandler } from './command/create-board-command.handler';
-import { BoardEntity } from 'libs/entities/board.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { CqrsModule } from '@nestjs/cqrs';
+import { UpdateBoardCommandHandler } from './command/update-board-command.handler';
+import { UpdateBoardEventHandler } from './event/update-board-event.handler';
 import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
 
 @Module({
@@ -31,6 +33,11 @@ import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
     CqrsModule,
   ],
   controllers: [BoardController],
-  providers: [CreateBoardCommandHandler, GetBoardsQueryHandler],
+  providers: [
+    CreateBoardCommandHandler,
+    GetBoardsQueryHandler,
+    UpdateBoardCommandHandler,
+    UpdateBoardEventHandler,
+  ],
 })
 export class BoardModule {}
