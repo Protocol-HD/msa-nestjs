@@ -7,6 +7,7 @@ import { UserController } from './user.controller';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
 import { GetUsersQueryHandler } from './query/get-users-query.handler';
+import { GetUserQueryHandler } from './query/get-user-query.handler';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { GetUsersQueryHandler } from './query/get-users-query.handler';
     CreateUserCommandHandler,
     CreateUserEventHandler,
     GetUsersQueryHandler,
+    GetUserQueryHandler,
   ],
 })
 export class UserModule {}
