@@ -13,4 +13,7 @@ export class UserEntity {
 
   @Column({ length: 30 })
   password: string;
+
+  @Column()
+  role: number;
 }

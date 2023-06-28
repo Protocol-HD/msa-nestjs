@@ -15,9 +15,9 @@ export class UserController {
 
   @MessagePattern({ cmd: 'createUser' })
   async createUser(data: CreateUserDto): Promise<any> {
-    const { name, email, password } = data;
+    const { name, email, password, role } = data;
     return await this.commandBus.execute(
-      new CreateUserCommand(name, email, password),
+      new CreateUserCommand(name, email, password, role),
     );
   }
 

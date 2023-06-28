@@ -19,12 +19,13 @@ export class CreateUserCommandHandler
   ) {}
 
   async execute(command: CreateUserCommand): Promise<UserEntity> {
-    const { name, email, password } = command;
+    const { name, email, password, role } = command;
     const user = new UserEntity();
     user.id = uuid.v4();
     user.name = name;
     user.email = email;
     user.password = password;
+    user.role = role;
     await this.userRepository.save(user);
 
     this.eventBus.publish(new CreateUserEvent());
