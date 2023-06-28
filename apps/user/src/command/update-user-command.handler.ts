@@ -1,10 +1,10 @@
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateUserCommand } from './update-user.command';
 import { Injectable } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as argon2 from 'argon2';
 import { UserEntity } from 'libs/entities/user.entity';
 import { Repository } from 'typeorm';
-import * as argon2 from 'argon2';
+import { UpdateUserCommand } from './update-user.command';
 
 @Injectable()
 @CommandHandler(UpdateUserCommand)
@@ -17,20 +17,20 @@ export class UpdateUserCommandHandler
     private readonly eventBus: EventBus,
   ) {}
 
-  async execute(command: UpdateUserCommand): Promise<void> {
+  async execute(command: UpdateUserCommand): Promise<UserEntity> {
     const { id, name, password, role } = command;
 
     let user = await this.userRepository.findOne({ where: { id } });
 
-    const hashedPassword = await argon2.hash(password);
-
     user = {
       ...user,
       ...(name && { name }),
-      ...(password && { hashedPassword }),
       ...(role && { role }),
+      ...(password && { password: await argon2.hash(password) }),
     };
 
     await this.userRepository.save(user);
+
+    return user;
   }
 }

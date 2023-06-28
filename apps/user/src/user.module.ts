@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'libs/entities/user.entity';
-import { UserController } from './user.controller';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
+import { UpdateUserCommandHandler } from './command/update-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
-import { GetUsersQueryHandler } from './query/get-users-query.handler';
 import { GetUserQueryHandler } from './query/get-user-query.handler';
+import { GetUsersQueryHandler } from './query/get-users-query.handler';
+import { UserController } from './user.controller';
 
 @Module({
   imports: [
@@ -31,6 +31,7 @@ import { GetUserQueryHandler } from './query/get-user-query.handler';
     CreateUserEventHandler,
     GetUsersQueryHandler,
     GetUserQueryHandler,
+    UpdateUserCommandHandler,
   ],
 })
 export class UserModule {}

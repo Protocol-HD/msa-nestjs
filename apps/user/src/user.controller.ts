@@ -34,6 +34,9 @@ export class UserController {
 
   @MessagePattern({ cmd: 'updateUser' })
   async updateUser(data: UpdateUserCommand): Promise<any> {
-    return await this.commandBus.execute(data);
+    const { id, name, password, role } = data;
+    return await this.commandBus.execute(
+      new UpdateUserCommand(id, name, password, role),
+    );
   }
 }
