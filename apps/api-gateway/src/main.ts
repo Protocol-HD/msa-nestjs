@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ApiGatewayModule } from './api-gateway.module';
-import { LoggingInterceptor } from 'libs/interceptors/logging/logging.interceptor';
+import { LoggingInterceptor } from 'libs/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);

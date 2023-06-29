@@ -1,16 +1,18 @@
 import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
   CallHandler,
+  ExecutionContext,
+  Injectable,
   Logger,
+  NestInterceptor,
 } from '@nestjs/common';
+import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const type = context.getType();
+    console.log(type);
 
     if (type === 'http') {
       const ctx = context.switchToHttp();
@@ -42,6 +44,18 @@ export class LoggingInterceptor implements NestInterceptor {
       const [req, res] = context.getArgs();
       Logger.log(
         `Request: ${JSON.stringify(res.args[1])} ${JSON.stringify(req)}`,
+      );
+
+      return next.handle().pipe(
+        tap((context: any) => {
+          Logger.log(`Response: ${JSON.stringify(context)}`);
+        }),
+      );
+    } else if (context.getType<GqlContextType>() == 'graphql') {
+      const gqlContext = GqlExecutionContext.create(context);
+
+      Logger.log(
+        `Request: ${JSON.stringify(gqlContext.getContext().req.body)}`,
       );
 
       return next.handle().pipe(

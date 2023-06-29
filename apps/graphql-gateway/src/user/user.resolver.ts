@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Resolver()
 export class UserResolver {
@@ -19,5 +20,11 @@ export class UserResolver {
   @Mutation(() => UserDto, { name: 'createUser' })
   createUser(@Args('input') input: CreateUserDto): Observable<UserDto> {
     return this.userService.createUser(input);
+  }
+
+  @Mutation(() => UserDto, { name: 'updateUser' })
+  @UseGuards(UserGuardGQL)
+  updateUser(@Args('input') input: UpdateUserDto): Observable<UserDto> {
+    return this.userService.updateUser(input);
   }
 }
