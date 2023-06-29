@@ -4,6 +4,7 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtStrategy } from 'libs/auth/jwt.strategy';
 import { AuthModule } from './auth/auth.module';
+import { BoardModule } from './board/board.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    BoardModule,
   ],
   providers: [JwtStrategy],
 })

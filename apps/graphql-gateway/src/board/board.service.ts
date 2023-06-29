@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { BoardEntity } from 'libs/entities/board.entity';
-import { Observable } from 'rxjs';
+import { BoardDto } from './dto/board.dto';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class BoardService {
@@ -10,11 +10,11 @@ export class BoardService {
     @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
   ) {}
 
-  getBoards(): Observable<BoardEntity[]> {
+  getBoards(): Observable<BoardDto[]> {
     return this.boardClient.send({ cmd: 'getBoards' }, {});
   }
 
-  createBoard(input: CreateBoardDto): Observable<BoardEntity> {
+  createBoard(input: CreateBoardDto): Observable<BoardDto> {
     return this.boardClient.send({ cmd: 'createBoard' }, input);
   }
 }

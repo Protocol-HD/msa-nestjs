@@ -9,6 +9,11 @@ import { CreateBoardDto } from './dto/create-board.dto';
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
+  @Get('/getBoards')
+  getBoards(): Observable<BoardEntity[]> {
+    return this.boardService.getBoards();
+  }
+
   @Post('/createBoard')
   @UseGuards(UserGuard)
   createBoard(
@@ -17,10 +22,5 @@ export class BoardController {
   ): Observable<BoardEntity> {
     input.email = req.user.email;
     return this.boardService.createBoard(input);
-  }
-
-  @Get('/getBoards')
-  getBoards(): Observable<BoardEntity[]> {
-    return this.boardService.getBoards();
   }
 }
