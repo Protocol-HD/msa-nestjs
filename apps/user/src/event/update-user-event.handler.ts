@@ -14,12 +14,10 @@ export class UpdateUserEventHandler
   handle(event: UpdateUserNameEvent) {
     switch (event.name) {
       case UpdateUserNameEvent.name:
-        this.boardClient
-          .send(
-            { cmd: 'updateBoardAuthor' },
-            { userId: event.userId, author: event.author },
-          )
-          .subscribe();
+        this.boardClient.emit(
+          { cmd: 'updateBoardAuthor' },
+          { userId: event.userId, author: event.author },
+        );
         break;
       default:
         break;

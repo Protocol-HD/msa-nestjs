@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
-import { MessagePattern } from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { BoardEntity } from 'libs/entities/board.entity';
 import { CreateBoardCommand } from './command/create-board.command';
 import { UpdateBoardAuthorEvent } from './event/update-board-author.event';
@@ -27,7 +27,7 @@ export class BoardController {
     );
   }
 
-  @MessagePattern({ cmd: 'updateBoardAuthor' })
+  @EventPattern({ cmd: 'updateBoardAuthor' })
   async updateAuthorBoard(data: UpdateBoardAuthorEvent): Promise<void> {
     const { userId, author } = data;
     return await this.eventBus.publish(
