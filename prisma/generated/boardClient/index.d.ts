@@ -1880,6 +1880,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
   /**
    * Deep Input Types
    */
@@ -2007,6 +2015,7 @@ export namespace Prisma {
     contains?: string
     startsWith?: string
     endsWith?: string
+    mode?: QueryMode
     not?: NestedStringFilter | string
   }
 
@@ -2071,6 +2080,7 @@ export namespace Prisma {
     contains?: string
     startsWith?: string
     endsWith?: string
+    mode?: QueryMode
     not?: NestedStringWithAggregatesFilter | string
     _count?: NestedIntFilter
     _min?: NestedStringFilter
