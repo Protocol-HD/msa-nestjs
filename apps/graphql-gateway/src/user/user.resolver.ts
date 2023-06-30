@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserGuardGQL } from 'libs/auth/auth.guard';
 import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,7 +24,11 @@ export class UserResolver {
 
   @Mutation(() => UserDto, { name: 'updateUser' })
   @UseGuards(UserGuardGQL)
-  updateUser(@Args('input') input: UpdateUserDto): Observable<UserDto> {
+  updateUser(
+    @Args('input') input: UpdateUserDto,
+    @Context() context,
+  ): Observable<UserDto> {
+    input.id = context.req.user.id;
     return this.userService.updateUser(input);
   }
 }
