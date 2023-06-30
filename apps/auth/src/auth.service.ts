@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
-import { UserEntity } from 'libs/entities/user.entity';
+import * as argon2 from 'argon2';
+import { User } from 'prisma/generated/UserClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginAuthInput, LoginAuthOutput } from './dto/auth.dto';
-import { JwtService } from '@nestjs/jwt';
-import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,7 @@ export class AuthService {
       input.email,
     );
 
-    const user: UserEntity = await firstValueFrom(observableData);
+    const user: User = await firstValueFrom(observableData);
 
     if (!user) {
       return new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);

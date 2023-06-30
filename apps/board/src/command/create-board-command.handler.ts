@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
-import { UserEntity } from 'libs/entities/user.entity';
+import { User } from 'prisma/generated/UserClient';
 import { Board, Prisma } from 'prisma/generated/boardClient';
 import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma.service';
@@ -22,7 +22,7 @@ export class CreateBoardCommandHandler
 
     const observableData = this.userClient.send({ cmd: 'getUser' }, email);
 
-    const user: UserEntity = await firstValueFrom(observableData);
+    const user: User = await firstValueFrom(observableData);
 
     const data: Prisma.BoardCreateInput = {
       title,

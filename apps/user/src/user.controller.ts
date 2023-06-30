@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessagePattern } from '@nestjs/microservices';
-import { UserEntity } from 'libs/entities/user.entity';
+import { User } from 'prisma/generated/UserClient';
 import { CreateUserCommand } from './command/create-user.command';
 import { UpdateUserCommand } from './command/update-user.command';
 import { GetUserQuery } from './query/get-user.query';
@@ -15,17 +15,17 @@ export class UserController {
   ) {}
 
   @MessagePattern({ cmd: 'getUser' })
-  async getUser(email: string): Promise<UserEntity> {
+  async getUser(email: string): Promise<User> {
     return await this.queryBus.execute(new GetUserQuery(email));
   }
 
   @MessagePattern({ cmd: 'getUsers' })
-  async getUsers(): Promise<UserEntity[]> {
+  async getUsers(): Promise<User[]> {
     return await this.queryBus.execute(new GetUsersQuery());
   }
 
   @MessagePattern({ cmd: 'createUser' })
-  async createUser(data: CreateUserCommand): Promise<UserEntity> {
+  async createUser(data: CreateUserCommand): Promise<User> {
     const { name, email, password, role } = data;
     return await this.commandBus.execute(
       new CreateUserCommand(name, email, password, role),
@@ -33,7 +33,7 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'updateUser' })
-  async updateUser(data: UpdateUserCommand): Promise<UserEntity> {
+  async updateUser(data: UpdateUserCommand): Promise<User> {
     const { id, name, password, role } = data;
     return await this.commandBus.execute(
       new UpdateUserCommand(id, name, password, role),

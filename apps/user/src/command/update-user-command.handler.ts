@@ -1,11 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { ClientProxy } from '@nestjs/microservices';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
-import { UserEntity } from 'libs/entities/user.entity';
-import { Repository } from 'typeorm';
+import { User } from 'prisma/generated/UserClient';
 import { UpdateUserNameEvent } from '../event/update-user-name.event';
+import { PrismaService } from '../prisma.service';
 import { UpdateUserCommand } from './update-user.command';
 
 @Injectable()
@@ -14,16 +12,14 @@ export class UpdateUserCommandHandler
   implements ICommandHandler<UpdateUserCommand>
 {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly prismaService: PrismaService,
     private readonly eventBus: EventBus,
-    @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
   ) {}
 
-  async execute(command: UpdateUserCommand): Promise<UserEntity> {
+  async execute(command: UpdateUserCommand): Promise<User> {
     const { id, name, password, role } = command;
 
-    let user = await this.userRepository.findOne({ where: { id } });
+    let user = await this.prismaService.user.findUnique({ where: { id } });
     user = {
       ...user,
       ...(name && { name }),
@@ -31,7 +27,10 @@ export class UpdateUserCommandHandler
       ...(password && { password: await argon2.hash(password) }),
     };
 
-    await this.userRepository.save(user);
+    await this.prismaService.user.update({
+      where: { id },
+      data: user,
+    });
 
     if (name) {
       this.eventBus.publish(new UpdateUserNameEvent(id, name));

@@ -1,17 +1,15 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'libs/entities/user.entity';
-import { Repository } from 'typeorm';
+import { User } from 'prisma/generated/UserClient';
+import { PrismaService } from '../prisma.service';
 import { GetUserQuery } from './get-user.query';
 
 @QueryHandler(GetUserQuery)
 export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
-  constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async execute(query: GetUserQuery): Promise<UserEntity> {
-    return await this.userRepository.findOne({ where: { email: query.email } });
+  async execute(query: GetUserQuery): Promise<User> {
+    return await this.prismaService.user.findFirst({
+      where: { email: query.email },
+    });
   }
 }
