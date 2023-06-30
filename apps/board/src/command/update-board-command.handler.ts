@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { BoardEntity } from 'libs/entities/board.entity';
-import { Repository } from 'typeorm';
+import { Board } from 'prisma/generated/boardClient';
+import { PrismaService } from '../prisma.service';
 import { UpdateBoardCommand } from './update-board.command';
 
 @Injectable()
@@ -10,15 +9,12 @@ import { UpdateBoardCommand } from './update-board.command';
 export class UpdateBoardCommandHandler
   implements ICommandHandler<UpdateBoardCommand>
 {
-  constructor(
-    @InjectRepository(BoardEntity)
-    private readonly boardRepository: Repository<BoardEntity>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async execute(command: UpdateBoardCommand): Promise<BoardEntity> {
+  async execute(command: UpdateBoardCommand): Promise<Board> {
     const { id, title, content, author } = command;
 
-    let board = await this.boardRepository.findOne({ where: { id } });
+    let board = await this.prismaService.board.findUnique({ where: { id } });
 
     board = {
       ...board,
@@ -27,7 +23,10 @@ export class UpdateBoardCommandHandler
       ...(author && { author }),
     };
 
-    await this.boardRepository.save(board);
+    await this.prismaService.board.update({
+      where: { id },
+      data: board,
+    });
 
     return board;
   }

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { BoardEntity } from 'libs/entities/board.entity';
+import { Board } from 'prisma/generated/boardClient';
 import { CreateBoardCommand } from './command/create-board.command';
 import { UpdateBoardAuthorEvent } from './event/update-board-author.event';
 import { GetBoardsQuery } from './query/get-boards.query';
@@ -15,12 +15,12 @@ export class BoardController {
   ) {}
 
   @MessagePattern({ cmd: 'getBoards' })
-  async getBoards(): Promise<BoardEntity[]> {
+  async getBoards(): Promise<Board[]> {
     return await this.queryBus.execute(new GetBoardsQuery());
   }
 
   @MessagePattern({ cmd: 'createBoard' })
-  async createBoard(data: CreateBoardCommand): Promise<BoardEntity> {
+  async createBoard(data: CreateBoardCommand): Promise<Board> {
     const { title, content, email } = data;
     return await this.commandBus.execute(
       new CreateBoardCommand(title, content, email),

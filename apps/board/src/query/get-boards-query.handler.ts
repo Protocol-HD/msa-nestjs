@@ -1,17 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Board } from 'prisma/generated/boardClient';
+import { PrismaService } from '../prisma.service';
 import { GetBoardsQuery } from './get-boards.query';
-import { BoardEntity } from 'libs/entities/board.entity';
 
 @QueryHandler(GetBoardsQuery)
 export class GetBoardsQueryHandler implements IQueryHandler<GetBoardsQuery> {
-  constructor(
-    @InjectRepository(BoardEntity)
-    private readonly boardRepository: Repository<BoardEntity>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async execute(query: GetBoardsQuery): Promise<BoardEntity[]> {
-    return await this.boardRepository.find();
+  async execute(query: GetBoardsQuery): Promise<Board[]> {
+    return await this.prismaService.board.findMany();
   }
 }

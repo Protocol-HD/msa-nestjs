@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { BoardEntity } from 'libs/entities/board.entity';
+import { Board } from 'prisma/generated/boardClient';
 import { Observable } from 'rxjs';
 import { CreateBoardDto } from './dto/create-board.dto';
 
@@ -10,11 +10,11 @@ export class BoardService {
     @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
   ) {}
 
-  getBoards(): Observable<BoardEntity[]> {
+  getBoards(): Observable<Board[]> {
     return this.boardClient.send({ cmd: 'getBoards' }, {});
   }
 
-  createBoard(input: CreateBoardDto): Observable<BoardEntity> {
+  createBoard(input: CreateBoardDto): Observable<Board> {
     return this.boardClient.send({ cmd: 'createBoard' }, input);
   }
 }

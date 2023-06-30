@@ -1,25 +1,20 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { PrismaService } from '../prisma.service';
 import { UpdateBoardAuthorEvent } from './update-board-author.event';
-import { InjectRepository } from '@nestjs/typeorm';
-import { BoardEntity } from 'libs/entities/board.entity';
-import { Repository } from 'typeorm';
 
 @EventsHandler(UpdateBoardAuthorEvent)
 export class UpdateBoardEventHandler
   implements IEventHandler<UpdateBoardAuthorEvent>
 {
-  constructor(
-    @InjectRepository(BoardEntity)
-    private readonly boardRepository: Repository<BoardEntity>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  handle(event: UpdateBoardAuthorEvent) {
+  async handle(event: UpdateBoardAuthorEvent) {
     switch (event.name) {
       case UpdateBoardAuthorEvent.name:
-        this.boardRepository.update(
-          { userId: event.userId },
-          { author: event.author },
-        );
+        await this.prismaService.board.updateMany({
+          where: { userId: event.userId },
+          data: { author: event.author },
+        });
         break;
       default:
         break;
