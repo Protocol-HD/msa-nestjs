@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import * as argon2 from 'argon2';
-import { User } from 'prisma/generated/UserClient';
+import { User } from '@prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginAuthInput, LoginAuthOutput } from './dto/auth.dto';
 

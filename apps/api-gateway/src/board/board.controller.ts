@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { UserGuard } from 'libs/auth/auth.guard';
-import { Board } from 'prisma/generated/boardClient';
+import { Board } from '@prisma/boardClient';
 import { Observable } from 'rxjs';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';

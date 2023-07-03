@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import * as argon2 from 'argon2';
-import { User } from 'prisma/generated/UserClient';
+import { User } from '@prisma/userClient';
 import { UpdateUserNameEvent } from '../event/update-user-name.event';
 import { PrismaService } from '../prisma.service';
 import { UpdateUserCommand } from './update-user.command';

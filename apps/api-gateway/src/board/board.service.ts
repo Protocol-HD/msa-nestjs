@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Board } from 'prisma/generated/boardClient';
+import { Board } from '@prisma/boardClient';
 import { Observable } from 'rxjs';
 import { CreateBoardDto } from './dto/create-board.dto';
 

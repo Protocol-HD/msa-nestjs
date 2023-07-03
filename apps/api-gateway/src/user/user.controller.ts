@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
-import { User } from 'prisma/generated/UserClient';
+import { User } from '@prisma/userClient';
 
 @Controller('user')
 export class UserController {

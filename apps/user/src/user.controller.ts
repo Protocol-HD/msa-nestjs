@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessagePattern } from '@nestjs/microservices';
-import { User } from 'prisma/generated/UserClient';
 import { CreateUserCommand } from './command/create-user.command';
 import { UpdateUserCommand } from './command/update-user.command';
 import { GetUserQuery } from './query/get-user.query';
 import { GetUsersQuery } from './query/get-users.query';
+import { User } from '@prisma/userClient';
 
 @Controller()
 export class UserController {
