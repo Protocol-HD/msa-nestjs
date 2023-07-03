@@ -5,7 +5,13 @@
 npm install
 ```
 
-## Server Start
+## env 셋팅
+```
+cp .env.example .env
+```
+복사한 .env파일의 Database url수정
+
+## Server 실행
 ```
 npm run start api-gateway
 npm run start graphql-gateway
