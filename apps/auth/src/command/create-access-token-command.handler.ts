@@ -39,7 +39,6 @@ export class CreateAccessTokenCommandHandler
     );
 
     const refreshToken: string = await firstValueFrom(observableData2);
-    console.log(refreshToken);
 
     // 유일 리프레시 토큰 검사
     if (!refreshToken || refreshToken !== command.refreshToken) {
