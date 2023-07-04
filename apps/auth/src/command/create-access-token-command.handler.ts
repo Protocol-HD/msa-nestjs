@@ -15,9 +15,13 @@ export class CreateAccessTokenCommandHandler
   constructor(
     private readonly jwtService: JwtService,
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject('REDIS_CACHE_SERVICE')
+    private readonly redisCacheClient: ClientProxy,
   ) {}
 
-  async execute(command: CreateAccessTokenCommand): Promise<LoginTokens> {
+  async execute(
+    command: CreateAccessTokenCommand,
+  ): Promise<LoginTokens | HttpException> {
     const observableData = this.userClient.send(
       { cmd: 'getUser' },
       command.email,
@@ -26,13 +30,27 @@ export class CreateAccessTokenCommandHandler
     const user: User = await firstValueFrom(observableData);
 
     if (!user) {
-      throw new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);
+      return new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);
     }
 
-    const verifyRefreshToken = this.jwtService.verify(command.refreshToken);
-    if (!verifyRefreshToken) {
-      throw new HttpException('INVALID_REFRESH_TOKEN', HttpStatus.BAD_REQUEST);
+    const observableData2 = this.redisCacheClient.send(
+      { cmd: 'getRedis' },
+      { key: `REFRESH_TOKEN:${user.email}` },
+    );
+
+    const refreshToken: string = await firstValueFrom(observableData2);
+    console.log(refreshToken);
+
+    // 유일 리프레시 토큰 검사
+    if (!refreshToken || refreshToken !== command.refreshToken) {
+      return new HttpException('INVALID_REFRESH_TOKEN', HttpStatus.BAD_REQUEST);
     }
+
+    // 리프레시 토큰 검사
+    // const verifyRefreshToken = this.jwtService.verify(command.refreshToken);
+    // if (!verifyRefreshToken) {
+    //   return new HttpException('INVALID_REFRESH_TOKEN', HttpStatus.BAD_REQUEST);
+    // }
 
     const payload = { email: user.email, role: user.role, id: user.id };
 

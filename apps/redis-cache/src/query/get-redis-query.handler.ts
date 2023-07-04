@@ -9,6 +9,7 @@ export class GetRedisQueryHandler implements IQueryHandler<GetRedisQuery> {
   constructor(@Inject(CACHE_MANAGER) private readonly redis: Cache) {}
 
   async execute(query: GetRedisQuery): Promise<unknown> {
+    console.log('GetRedisQueryHandler', query);
     const { key } = query;
     return await this.redis.get(key);
   }

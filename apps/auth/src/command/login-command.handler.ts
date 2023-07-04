@@ -18,7 +18,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
   ) {}
 
-  async execute(command: LoginCommand): Promise<LoginTokens> {
+  async execute(command: LoginCommand): Promise<LoginTokens | HttpException> {
     const observableData = this.userClient.send(
       { cmd: 'getUser' },
       command.email,
@@ -27,7 +27,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     const user: User = await firstValueFrom(observableData);
 
     if (!user) {
-      throw new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);
+      return new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);
     }
 
     const isCorrectPassword = await argon2.verify(
@@ -36,7 +36,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     );
 
     if (!isCorrectPassword) {
-      throw new HttpException('INVALID_PASSWORD', HttpStatus.BAD_REQUEST);
+      return new HttpException('INVALID_PASSWORD', HttpStatus.BAD_REQUEST);
     }
 
     const payload = { email: user.email, role: user.role, id: user.id };
