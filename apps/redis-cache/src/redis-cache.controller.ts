@@ -1,33 +1,44 @@
 import { Controller } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { RedisCacheService } from './redis-cache.service';
+import { DelRedisCommand } from './command/del-redis.command';
+import { SetRedisCommand } from './command/set-redis.command';
+import { GetRedisQuery } from './query/get-redis.query';
 
 @Controller()
 export class RedisCacheController {
-  constructor(private readonly redisCacheService: RedisCacheService) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @MessagePattern({ cmd: 'getRedis' })
-  async getRedis(key: string) {
-    return await this.redisCacheService.get(key);
+  async getRedis(input: GetRedisQuery) {
+    const { key } = input;
+    this.queryBus.execute(new GetRedisQuery(key));
   }
 
   @MessagePattern({ cmd: 'setRedis' })
-  async setRedis(key: string, value: any) {
-    await this.redisCacheService.set(key, value);
-  }
-
-  @EventPattern({ cmd: 'setRedis' })
-  async setRedisEvent(key: string, value: any) {
-    await this.redisCacheService.set(key, value);
+  async setRedis(input: SetRedisCommand) {
+    const { key, value, ttl } = input;
+    this.commandBus.execute(new SetRedisCommand(key, value, ttl));
   }
 
   @MessagePattern({ cmd: 'delRedis' })
-  async delRedis(key: string) {
-    await this.redisCacheService.del(key);
+  async delRedis(input: DelRedisCommand) {
+    const { key } = input;
+    this.commandBus.execute(new DelRedisCommand(key));
+  }
+
+  @EventPattern({ cmd: 'setRedis' })
+  async setRedisEvent(input: SetRedisCommand) {
+    const { key, value, ttl } = input;
+    this.commandBus.execute(new SetRedisCommand(key, value, ttl));
   }
 
   @EventPattern({ cmd: 'delRedis' })
-  async delRedisEvent(key: string) {
-    await this.redisCacheService.del(key);
+  async delRedisEvent(input: DelRedisCommand) {
+    const { key } = input;
+    this.commandBus.execute(new DelRedisCommand(key));
   }
 }

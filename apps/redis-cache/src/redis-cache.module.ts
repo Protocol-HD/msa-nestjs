@@ -1,9 +1,12 @@
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CqrsModule } from '@nestjs/cqrs';
 import { redisStore } from 'cache-manager-redis-store';
+import { DelRedisCommandHandler } from './command/del-redis-command.handler';
+import { SetRedisCommandHandler } from './command/set-redis-command.handler';
+import { GetRedisQueryHandler } from './query/get-redis-query.handler';
 import { RedisCacheController } from './redis-cache.controller';
-import { RedisCacheService } from './redis-cache.service';
 
 @Module({
   imports: [
@@ -23,8 +26,13 @@ import { RedisCacheService } from './redis-cache.service';
         };
       },
     }),
+    CqrsModule,
   ],
   controllers: [RedisCacheController],
-  providers: [RedisCacheService],
+  providers: [
+    GetRedisQueryHandler,
+    SetRedisCommandHandler,
+    DelRedisCommandHandler,
+  ],
 })
 export class RedisCacheModule {}
