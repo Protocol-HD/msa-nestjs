@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AuthController } from './auth.controller';
+import { CreateAccessTokenCommandHandler } from './command/create-access-token-command.handler';
+import { LoginCommandHandler } from './command/login-command.handler';
 
 @Module({
   imports: [
@@ -17,8 +19,9 @@ import { JwtModule } from '@nestjs/jwt';
         options: { port: 3001 },
       },
     ]),
+    CqrsModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [LoginCommandHandler, CreateAccessTokenCommandHandler],
 })
 export class AuthModule {}
