@@ -16,7 +16,7 @@ export class UpdateUserEventHandler
       case UpdateUserNameEvent.name:
         this.boardClient.emit(
           { cmd: 'updateBoardAuthor' },
-          { userId: event.userId, author: event.author },
+          { userId: event.userId },
         );
         break;
       default:

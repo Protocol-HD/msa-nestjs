@@ -29,9 +29,7 @@ export class BoardController {
 
   @EventPattern({ cmd: 'updateBoardAuthor' })
   async updateAuthorBoard(data: UpdateBoardAuthorEvent): Promise<void> {
-    const { userId, author } = data;
-    return await this.eventBus.publish(
-      new UpdateBoardAuthorEvent(userId, author),
-    );
+    const { userId } = data;
+    return await this.eventBus.publish(new UpdateBoardAuthorEvent(userId));
   }
 }

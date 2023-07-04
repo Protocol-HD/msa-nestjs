@@ -33,7 +33,7 @@ export class UpdateUserCommandHandler
     });
 
     if (name) {
-      this.eventBus.publish(new UpdateUserNameEvent(id, name));
+      this.eventBus.publish(new UpdateUserNameEvent(id));
     }
 
     return user;
