@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { BoardResolver } from './board.resolver';
-import { BoardService } from './board.service';
 
 @Module({
   imports: [
@@ -13,6 +12,6 @@ import { BoardService } from './board.service';
       },
     ]),
   ],
-  providers: [BoardResolver, BoardService],
+  providers: [BoardResolver],
 })
 export class BoardModule {}

@@ -1,18 +1,20 @@
+import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { BoardService } from './board.service';
+import { ClientProxy } from '@nestjs/microservices';
+import { UserGuardGQL } from 'libs/auth/auth.guard';
 import { Observable } from 'rxjs';
 import { BoardDto } from './dto/board.dto';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { UserGuardGQL } from 'libs/auth/auth.guard';
-import { UseGuards } from '@nestjs/common';
 
 @Resolver()
 export class BoardResolver {
-  constructor(private readonly boardService: BoardService) {}
+  constructor(
+    @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
+  ) {}
 
   @Query(() => [BoardDto], { name: 'boards' })
   getBoards(): Observable<BoardDto[]> {
-    return this.boardService.getBoards();
+    return this.boardClient.send({ cmd: 'getBoards' }, {});
   }
 
   @Mutation(() => BoardDto, { name: 'createBoard' })
@@ -22,6 +24,6 @@ export class BoardResolver {
     @Context() context,
   ): Observable<BoardDto> {
     input.email = context.req.user.email;
-    return this.boardService.createBoard(input);
+    return this.boardClient.send({ cmd: 'createBoard' }, input);
   }
 }
