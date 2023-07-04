@@ -27,6 +27,7 @@ export class BoardController {
     );
   }
 
+  // Zero-Payload Event 예제로 사용하기 위해 userId만 전달받음
   @EventPattern({ cmd: 'updateBoardAuthor' })
   async updateAuthorBoard(data: UpdateBoardAuthorEvent): Promise<void> {
     const { userId } = data;

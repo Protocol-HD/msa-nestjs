@@ -14,6 +14,7 @@ export class UpdateUserEventHandler
   handle(event: UpdateUserNameEvent) {
     switch (event.name) {
       case UpdateUserNameEvent.name:
+        // Zero-Payload Event 예제로 사용하기 위해 userId만 전달
         this.boardClient.emit(
           { cmd: 'updateBoardAuthor' },
           { userId: event.userId },

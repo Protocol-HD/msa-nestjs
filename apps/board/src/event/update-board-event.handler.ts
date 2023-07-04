@@ -18,6 +18,7 @@ export class UpdateBoardEventHandler
   async handle(event: UpdateBoardAuthorEvent) {
     switch (event.name) {
       case UpdateBoardAuthorEvent.name:
+        // Zero-Payload Event 예제로 사용하기 위해 전달받은 userId로 User 조회
         const observableData = this.userClient.send(
           { cmd: 'getUserById' },
           event.userId,
@@ -25,6 +26,7 @@ export class UpdateBoardEventHandler
 
         const user: User = await firstValueFrom(observableData);
 
+        // User 조회 결과로 Board의 author를 업데이트
         await this.prismaService.board.updateMany({
           where: { userId: event.userId },
           data: { author: user.name },
