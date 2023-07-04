@@ -1,23 +1,33 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { UserGuard } from 'libs/auth/auth.guard';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { Board } from '@prisma/boardClient';
+import { UserGuard } from 'libs/auth/auth.guard';
 import { Observable } from 'rxjs';
-import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('board')
 export class BoardController {
-  constructor(private readonly boardService: BoardService) {}
+  constructor(
+    @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
+  ) {}
 
   @Get('/getBoards')
   getBoards(): Observable<Board[]> {
-    return this.boardService.getBoards();
+    return this.boardClient.send({ cmd: 'getBoards' }, {});
   }
 
   @Post('/createBoard')
   @UseGuards(UserGuard)
   createBoard(@Body() input: CreateBoardDto, @Req() req): Observable<Board> {
     input.email = req.user.email;
-    return this.boardService.createBoard(input);
+    return this.boardClient.send({ cmd: 'createBoard' }, input);
   }
 }
