@@ -52,9 +52,9 @@ update-board-author.event.ts
 
 ---
 ## Cqrs 패턴 적용 유의점
-* Command, Query는 핸들러 하나당 하나의 기능을 담당, 즉 기능이 추가되면 새로 파일을 작성해야함
+* Command, Query는 핸들러 하나당 하나의 기능을 담당, 즉 기능이 추가되면 새로운 파일을 추가 작성해야함
 * Event는 하나의 핸들러에 여러 이벤트를 핸들링 할 수 있음, switch 문으로 어떤 이벤트인지 구분 (확정 못함, 논의 필요)
-* 이벤트 전달시 Zero-Payload 룰 적용 (왠만하면 id 정도만 넘기기로)
+* 이벤트 전달시 Zero-Payload 룰 적용 (왠만하면 id 정도만 넘기기로, update-user-event.handler.ts에 예가 있음)
 
 ---
 ## Redis 규칙
