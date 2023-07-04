@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { Board } from '@prisma/boardClient';
+import { Board } from 'libs/prisma/boardClient';
 import { CreateBoardCommand } from './command/create-board.command';
 import { UpdateBoardAuthorEvent } from './event/update-board-author.event';
 import { GetBoardsQuery } from './query/get-boards.query';

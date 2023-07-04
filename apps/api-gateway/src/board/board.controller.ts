@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Board } from '@prisma/boardClient';
+import { Board } from 'libs/prisma/boardClient';
 import { UserGuard } from 'libs/auth/auth.guard';
 import { Observable } from 'rxjs';
 import { CreateBoardDto } from './dto/create-board.dto';

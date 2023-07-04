@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from '@prisma/userClient';
-import { Board, Prisma } from '@prisma/boardClient';
+import { User } from 'libs/prisma/userClient';
+import { Board, Prisma } from 'libs/prisma/boardClient';
 import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma.service';
 import { CreateBoardCommand } from './create-board.command';

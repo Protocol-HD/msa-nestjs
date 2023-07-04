@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Board } from '@prisma/boardClient';
+import { Board } from 'libs/prisma/boardClient';
 import { PrismaService } from '../prisma.service';
 import { UpdateBoardCommand } from './update-board.command';
 

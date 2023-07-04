@@ -5,7 +5,7 @@ import { CreateUserCommand } from './command/create-user.command';
 import { UpdateUserCommand } from './command/update-user.command';
 import { GetUserQuery } from './query/get-user.query';
 import { GetUsersQuery } from './query/get-users.query';
-import { User } from '@prisma/userClient';
+import { User } from 'libs/prisma/userClient';
 import { GetUserByIdQuery } from './query/get-user-by-id.query';
 
 @Controller()

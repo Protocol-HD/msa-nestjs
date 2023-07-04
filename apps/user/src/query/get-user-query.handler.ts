@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { User } from '@prisma/userClient';
+import { User } from 'libs/prisma/userClient';
 import { PrismaService } from '../prisma.service';
 import { GetUserQuery } from './get-user.query';
 

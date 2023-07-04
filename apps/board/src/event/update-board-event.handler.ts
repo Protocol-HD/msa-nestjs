@@ -4,7 +4,7 @@ import { UpdateBoardAuthorEvent } from './update-board-author.event';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { User } from '@prisma/userClient';
+import { User } from 'libs/prisma/userClient';
 
 @EventsHandler(UpdateBoardAuthorEvent)
 export class UpdateBoardEventHandler

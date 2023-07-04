@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Board } from '@prisma/boardClient';
+import { Board } from 'libs/prisma/boardClient';
 import { PrismaService } from '../prisma.service';
 import { GetBoardsQuery } from './get-boards.query';
 

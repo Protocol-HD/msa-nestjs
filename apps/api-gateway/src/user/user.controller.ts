@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from '@prisma/userClient';
+import { User } from 'libs/prisma/userClient';
 import { UserGuard } from 'libs/auth/auth.guard';
 import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';

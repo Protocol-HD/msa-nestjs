@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from '@prisma/userClient';
+import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginTokens } from '../dto/login-tokens.dto';
 import { CreateAccessTokenCommand } from './create-access-token.command';
