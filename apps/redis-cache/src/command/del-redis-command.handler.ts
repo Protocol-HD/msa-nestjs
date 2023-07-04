@@ -2,17 +2,17 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Cache } from 'cache-manager';
-import { SetRedisCommand } from './set-redis.command';
+import { DelRedisCommand } from './del-redis.command';
 
 @Injectable()
-@CommandHandler(SetRedisCommand)
+@CommandHandler(DelRedisCommand)
 export class DelRedisCommandHandler
-  implements ICommandHandler<SetRedisCommand>
+  implements ICommandHandler<DelRedisCommand>
 {
   constructor(@Inject(CACHE_MANAGER) private readonly redis: Cache) {}
 
-  async execute(command: SetRedisCommand): Promise<void> {
+  async execute(command: DelRedisCommand): Promise<void> {
     const { key } = command;
-    await this.redis.del(key);
+    return await this.redis.del(key);
   }
 }

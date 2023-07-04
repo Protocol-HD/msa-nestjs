@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { CreateAccessTokenCommandHandler } from './command/create-access-token-command.handler';
 import { LoginCommandHandler } from './command/login-command.handler';
+import { LoginEventHandler } from './event/login-event.handler';
 
 @Module({
   imports: [
@@ -18,10 +19,19 @@ import { LoginCommandHandler } from './command/login-command.handler';
         transport: Transport.TCP,
         options: { port: 3001 },
       },
+      {
+        name: 'REDIS_CACHE_SERVICE',
+        transport: Transport.TCP,
+        options: { port: 3004 },
+      },
     ]),
     CqrsModule,
   ],
   controllers: [AuthController],
-  providers: [LoginCommandHandler, CreateAccessTokenCommandHandler],
+  providers: [
+    LoginCommandHandler,
+    CreateAccessTokenCommandHandler,
+    LoginEventHandler,
+  ],
 })
 export class AuthModule {}

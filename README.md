@@ -31,3 +31,11 @@ npm run start user
 npm run start board
 npm run start auth
 ```
+
+
+## 파일 네이밍 규칙
+
+## Redis 규칙
+Redis에 데이터를 저장할 때
+key 값은 예를들어 'REFRASH_TOKEN:test@email.com'과 같이
+대문자로 이루어진 그룹명으로 구분

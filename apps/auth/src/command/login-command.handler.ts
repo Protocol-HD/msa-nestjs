@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from 'libs/prisma/userClient';
 import * as argon2 from 'argon2';
+import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginTokens } from '../dto/login-tokens.dto';
+import { RefreshTokenStoreEvent } from '../event/refresh-token-store.event';
 import { LoginCommand } from './login.command';
 
 @Injectable()
@@ -13,6 +14,7 @@ import { LoginCommand } from './login.command';
 export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly jwtService: JwtService,
+    private readonly eventBus: EventBus,
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
   ) {}
 
@@ -44,6 +46,10 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
         expiresIn: '7d',
       }),
     };
+
+    this.eventBus.publish(
+      new RefreshTokenStoreEvent(user.email, loginTokens.refreshToken),
+    );
 
     return loginTokens;
   }

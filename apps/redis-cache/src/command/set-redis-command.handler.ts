@@ -13,6 +13,7 @@ export class SetRedisCommandHandler
 
   async execute(command: SetRedisCommand): Promise<void> {
     const { key, value, ttl } = command;
-    await this.redis.set(key, value, ttl);
+    // cache-manager v4 or v2 인 경우 ttl을 객체로 넘겨야 한다.
+    return await this.redis.set(key, value, { ttl } as any);
   }
 }
