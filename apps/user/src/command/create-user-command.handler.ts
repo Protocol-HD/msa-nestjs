@@ -4,7 +4,7 @@ import * as argon2 from 'argon2';
 import { CreateUserEvent } from '../event/create-user.event';
 import { PrismaService } from '../prisma.service';
 import { CreateUserCommand } from './create-user.command';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, User } from 'libs/prisma/userClient';
 
 @Injectable()
 @CommandHandler(CreateUserCommand)

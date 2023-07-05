@@ -1,5 +1,10 @@
 # MSA Nestjs Architecture
 
+---
+## Node Version
+* Node 18.15.0
+
+---
 ## Install
 ```
 npm install

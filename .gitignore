@@ -36,3 +36,7 @@ lerna-debug.log*
 
 # Environment variables
 .env
+.env.*
+
+# Not ignored
+!.env.example
