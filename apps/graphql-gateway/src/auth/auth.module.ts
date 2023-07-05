@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthResolver } from './auth.resolver';
 
 @Module({
@@ -7,8 +8,8 @@ import { AuthResolver } from './auth.resolver';
     ClientsModule.register([
       {
         name: 'AUTH_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3003 },
+        transport: MICROSERVICE_OPTIONS.AUTH.transport,
+        options: MICROSERVICE_OPTIONS.AUTH.options,
       },
     ]),
   ],

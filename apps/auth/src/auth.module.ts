@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthController } from './auth.controller';
 import { CreateAccessTokenCommandHandler } from './command/create-access-token-command.handler';
 import { LoginCommandHandler } from './command/login-command.handler';
@@ -16,13 +17,13 @@ import { LoginEventHandler } from './event/login-event.handler';
     ClientsModule.register([
       {
         name: 'USER_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3001 },
+        transport: MICROSERVICE_OPTIONS.USER.transport,
+        options: MICROSERVICE_OPTIONS.USER.options,
       },
       {
         name: 'REDIS_CACHE_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3004 },
+        transport: MICROSERVICE_OPTIONS.REDIS_CACHE.transport,
+        options: MICROSERVICE_OPTIONS.REDIS_CACHE.options,
       },
     ]),
     CqrsModule,

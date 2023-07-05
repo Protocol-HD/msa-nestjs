@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json /app
 COPY dist/apps/microservice-name/. /app/
-COPY .env.production /app/.env
+COPY .env.development /app/.env
 COPY libs/prisma/* /app/libs/prisma/
 
 RUN npm install

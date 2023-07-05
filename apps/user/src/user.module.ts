@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
 import { UpdateUserCommandHandler } from './command/update-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
@@ -16,8 +17,8 @@ import { UserController } from './user.controller';
     ClientsModule.register([
       {
         name: 'BOARD_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3002 },
+        transport: MICROSERVICE_OPTIONS.BOARD.transport,
+        options: MICROSERVICE_OPTIONS.BOARD.options,
       },
     ]),
     CqrsModule,

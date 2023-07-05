@@ -1,17 +1,18 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+import { ClientsModule } from '@nestjs/microservices';
+import { JwtStrategy } from 'libs/auth/jwt.strategy';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthModule } from './auth/auth.module';
 import { BoardModule } from './board/board.module';
-import { JwtStrategy } from 'libs/auth/jwt.strategy';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     ClientsModule.register([
       {
         name: 'REDIS_CACHE_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3004 },
+        transport: MICROSERVICE_OPTIONS.REDIS_CACHE.transport,
+        options: MICROSERVICE_OPTIONS.REDIS_CACHE.options,
       },
     ]),
     UserModule,

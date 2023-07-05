@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { BoardController } from './board.controller';
 
 @Module({
@@ -7,8 +8,8 @@ import { BoardController } from './board.controller';
     ClientsModule.register([
       {
         name: 'BOARD_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 3002 },
+        transport: MICROSERVICE_OPTIONS.BOARD.transport,
+        options: MICROSERVICE_OPTIONS.BOARD.options,
       },
     ]),
   ],
