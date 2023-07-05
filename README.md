@@ -38,19 +38,26 @@ npx prisma generate --schema ./libs/prisma/board-schema.prisma
 ---
 ## Server 실행
 ```
-npm run start api-gateway
-npm run start graphql-gateway
-npm run start user
-npm run start board
-npm run start auth
-npm run start redis-cache
+npm run start:dev api-gateway
+npm run start:dev graphql-gateway
+npm run start:dev user
+npm run start:dev board
+npm run start:dev auth
+npm run start:dev redis-cache
 ```
-윈도우의 경우 한번에 실행하는 start-server.bat 실행
+윈도우의 경우 한번에 실행하는 start-server-dev.bat 실행
 
 ---
-## 로컬에서 Docker 이미지 빌드 (bash)
+## 로컬 Docker image build 스크립트(bash)
 ```
 sh local_build.sh
+```
+
+---
+## 로컬 Docker 전체 run/stop 스크립트 (bash)
+```
+sh local_docker_run.sh
+sh local_docker_stop.sh
 ```
 
 ---
