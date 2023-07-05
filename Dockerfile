@@ -1,4 +1,3 @@
-# docker build -t microservice-name -f ./apps/microservice-name/Dockerfile .
 FROM node:18.15.0
 
 WORKDIR /app

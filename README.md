@@ -48,6 +48,12 @@ npm run start redis-cache
 윈도우의 경우 한번에 실행하는 start-server.bat 실행
 
 ---
+## 로컬에서 Docker 이미지 빌드 (bash)
+```
+sh local_build.sh
+```
+
+---
 ## 파일 네이밍 규칙
 * 폴더명, 파일명 모두 소문자만 사용
 ```
