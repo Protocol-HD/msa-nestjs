@@ -13,6 +13,11 @@ cp .env.example .env
 복사한 .env파일의 Database url수정
 
 ---
+## 필요 데이터베이스
+* MySQL or PostgreSQL -> user, board 서버에서 사용
+* Redis -> redis-cache 서버에서 사용
+
+---
 ## Prisma 셋팅
 * 최초 실행 시, Db에 스키마 생성
 ```
@@ -35,6 +40,7 @@ npm run start board
 npm run start auth
 npm run start redis-cache
 ```
+윈도우의 경우 한번에 실행하는 start-server.bat 실행
 
 ---
 ## 파일 네이밍 규칙
