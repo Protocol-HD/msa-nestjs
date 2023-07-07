@@ -83,3 +83,43 @@ update-board-author.event.ts
 ---
 ## Redis 규칙
 * Redis에 데이터를 저장할 때 key 값은 예를들어 'REFRESH_TOKEN:test@email.com'과 같이 대문자로 이루어진 그룹명으로 구분
+
+## Graphql DTO 작성 방법 예시
+* BoardDto Example
+```
+import { Field, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class BoardDto {
+  @Field()
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field()
+  content: string;
+
+  @Field()
+  userId: number;
+
+  @Field()
+  author: string;
+}
+```
+* Board 위와 같이 작성했을 시 CreateBoardDto 같이 내용 중복이 있는 경우는 PickType 또는 OmitType을 최대한 활용하여 작성
+* BoardDto에 없는 필드인 email은 따로 작성하여 추가
+```
+import { Field, InputType, PartialType, PickType } from '@nestjs/graphql';
+import { BoardDto } from './board.dto';
+
+@InputType()
+export class CreateBoardDto extends PickType(PartialType(BoardDto, InputType), [
+  'title',
+  'content',
+]) {
+  @Field({ nullable: true })
+  email: string;
+}
+
+```
