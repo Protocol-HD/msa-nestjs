@@ -2,6 +2,7 @@ import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserGuardGQL } from 'libs/auth/auth.guard';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Observable } from 'rxjs';
 import { LoginInput } from './dto/login-input.dto';
 import { LoginTokens } from './dto/login-tokens.dto';
@@ -9,7 +10,8 @@ import { LoginTokens } from './dto/login-tokens.dto';
 @Resolver()
 export class AuthResolver {
   constructor(
-    @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.AUTH.name)
+    private readonly authClient: ClientProxy,
   ) {}
 
   @Mutation(() => LoginTokens, { name: 'login' })

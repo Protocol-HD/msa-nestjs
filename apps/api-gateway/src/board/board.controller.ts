@@ -8,15 +8,17 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Board } from 'libs/prisma/boardClient';
 import { UserGuard } from 'libs/auth/auth.guard';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
+import { Board } from 'libs/prisma/boardClient';
 import { Observable } from 'rxjs';
 import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('board')
 export class BoardController {
   constructor(
-    @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.BOARD.name)
+    private readonly boardClient: ClientProxy,
   ) {}
 
   @Get('/getBoards')

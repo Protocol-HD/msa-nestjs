@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginTokens } from '../dto/login-tokens.dto';
@@ -14,8 +15,9 @@ export class CreateAccessTokenCommandHandler
 {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
-    @Inject('REDIS_CACHE_SERVICE')
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.REDIS_CACHE.name)
     private readonly redisCacheClient: ClientProxy,
   ) {}
 

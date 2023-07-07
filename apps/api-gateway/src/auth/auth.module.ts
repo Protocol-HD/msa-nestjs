@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
   imports: [
     ClientsModule.register([
       {
-        name: 'AUTH_SERVICE',
+        name: MICROSERVICE_OPTIONS.AUTH.name,
         transport: MICROSERVICE_OPTIONS.AUTH.transport,
         options: MICROSERVICE_OPTIONS.AUTH.options,
       },

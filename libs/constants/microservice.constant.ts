@@ -4,6 +4,7 @@ const isLocal = process.env.NODE_ENV === 'local';
 
 export const MICROSERVICE_OPTIONS = {
   API_GATEWAY: {
+    name: 'API_GATEWAY_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 3000,
@@ -11,6 +12,7 @@ export const MICROSERVICE_OPTIONS = {
     },
   },
   USER: {
+    name: 'USER_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 3001,
@@ -18,6 +20,7 @@ export const MICROSERVICE_OPTIONS = {
     },
   },
   BOARD: {
+    name: 'BOARD_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 3002,
@@ -25,6 +28,7 @@ export const MICROSERVICE_OPTIONS = {
     },
   },
   AUTH: {
+    name: 'AUTH_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 3003,
@@ -32,6 +36,7 @@ export const MICROSERVICE_OPTIONS = {
     },
   },
   REDIS_CACHE: {
+    name: 'REDIS_CACHE_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 3004,
@@ -39,6 +44,7 @@ export const MICROSERVICE_OPTIONS = {
     },
   },
   GRAPHQL_GATEWAY: {
+    name: 'GRAPHQL_GATEWAY_SERVICE',
     transport: Transport.TCP as number,
     options: {
       port: 4000,

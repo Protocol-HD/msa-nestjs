@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { RefreshTokenStoreEvent } from './refresh-token-store.event';
 
 @EventsHandler(RefreshTokenStoreEvent)
@@ -8,7 +9,7 @@ export class LoginEventHandler
   implements IEventHandler<RefreshTokenStoreEvent>
 {
   constructor(
-    @Inject('REDIS_CACHE_SERVICE')
+    @Inject(MICROSERVICE_OPTIONS.REDIS_CACHE.name)
     private readonly redisCacheClient: ClientProxy,
   ) {}
 

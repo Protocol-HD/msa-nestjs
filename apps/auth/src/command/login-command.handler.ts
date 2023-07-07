@@ -3,6 +3,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import * as argon2 from 'argon2';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { LoginTokens } from '../dto/login-tokens.dto';
@@ -15,7 +16,8 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly jwtService: JwtService,
     private readonly eventBus: EventBus,
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
   ) {}
 
   async execute(command: LoginCommand): Promise<LoginTokens | HttpException> {

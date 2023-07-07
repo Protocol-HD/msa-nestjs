@@ -9,8 +9,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from 'libs/prisma/userClient';
 import { UserGuard } from 'libs/auth/auth.guard';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
+import { User } from 'libs/prisma/userClient';
 import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,7 +19,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('user')
 export class UserController {
   constructor(
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
   ) {}
 
   @Get('/getUsers')

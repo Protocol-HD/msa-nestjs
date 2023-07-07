@@ -7,7 +7,7 @@ import { UserResolver } from './user.resolver';
   imports: [
     ClientsModule.register([
       {
-        name: 'USER_SERVICE',
+        name: MICROSERVICE_OPTIONS.USER.name,
         transport: MICROSERVICE_OPTIONS.USER.transport,
         options: MICROSERVICE_OPTIONS.USER.options,
       },

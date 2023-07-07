@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { PassportStrategy } from '@nestjs/passport';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @Inject('REDIS_CACHE_SERVICE')
+    @Inject(MICROSERVICE_OPTIONS.REDIS_CACHE.name)
     private readonly redisCacheClient: ClientProxy,
   ) {
     super({

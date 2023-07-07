@@ -1,6 +1,7 @@
 import { Body, Controller, Inject, Post, Req, UseGuards } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserGuard } from 'libs/auth/auth.guard';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Observable } from 'rxjs';
 import { LoginInput } from './dto/login-input.dto';
 import { LoginTokens } from './dto/login-tokens.dto';
@@ -8,7 +9,8 @@ import { LoginTokens } from './dto/login-tokens.dto';
 @Controller('auth')
 export class AuthController {
   constructor(
-    @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.AUTH.name)
+    private readonly authClient: ClientProxy,
   ) {}
 
   @Post('/login')

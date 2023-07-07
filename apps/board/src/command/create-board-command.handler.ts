@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
-import { User } from 'libs/prisma/userClient';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Board, Prisma } from 'libs/prisma/boardClient';
+import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma.service';
 import { CreateBoardCommand } from './create-board.command';
@@ -14,7 +15,8 @@ export class CreateBoardCommandHandler
 {
   constructor(
     private readonly prismaService: PrismaService,
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
   ) {}
 
   async execute(command: CreateBoardCommand): Promise<Board> {

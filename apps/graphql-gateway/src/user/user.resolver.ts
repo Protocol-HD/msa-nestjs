@@ -2,6 +2,7 @@ import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserGuardGQL } from 'libs/auth/auth.guard';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Observable } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,7 +11,8 @@ import { UserDto } from './dto/user.dto';
 @Resolver()
 export class UserResolver {
   constructor(
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
   ) {}
 
   @Query(() => [UserDto], { name: 'users' })

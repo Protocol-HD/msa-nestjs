@@ -1,10 +1,11 @@
+import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { ClientProxy } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
+import { User } from 'libs/prisma/userClient';
+import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma.service';
 import { UpdateBoardAuthorEvent } from './update-board-author.event';
-import { ClientProxy } from '@nestjs/microservices';
-import { Inject } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
-import { User } from 'libs/prisma/userClient';
 
 @EventsHandler(UpdateBoardAuthorEvent)
 export class UpdateBoardEventHandler
@@ -12,7 +13,8 @@ export class UpdateBoardEventHandler
 {
   constructor(
     private readonly prismaService: PrismaService,
-    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.USER.name)
+    private readonly userClient: ClientProxy,
   ) {}
 
   async handle(event: UpdateBoardAuthorEvent) {

@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
+import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { UpdateUserNameEvent } from './update-user-name.event';
 
 @EventsHandler(UpdateUserNameEvent)
@@ -8,7 +9,8 @@ export class UpdateUserEventHandler
   implements IEventHandler<UpdateUserNameEvent>
 {
   constructor(
-    @Inject('BOARD_SERVICE') private readonly boardClient: ClientProxy,
+    @Inject(MICROSERVICE_OPTIONS.BOARD.name)
+    private readonly boardClient: ClientProxy,
   ) {}
 
   handle(event: UpdateUserNameEvent) {

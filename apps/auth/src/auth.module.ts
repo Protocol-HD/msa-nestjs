@@ -16,12 +16,12 @@ import { LoginEventHandler } from './event/login-event.handler';
     }),
     ClientsModule.register([
       {
-        name: 'USER_SERVICE',
+        name: MICROSERVICE_OPTIONS.USER.name,
         transport: MICROSERVICE_OPTIONS.USER.transport,
         options: MICROSERVICE_OPTIONS.USER.options,
       },
       {
-        name: 'REDIS_CACHE_SERVICE',
+        name: MICROSERVICE_OPTIONS.REDIS_CACHE.name,
         transport: MICROSERVICE_OPTIONS.REDIS_CACHE.transport,
         options: MICROSERVICE_OPTIONS.REDIS_CACHE.options,
       },

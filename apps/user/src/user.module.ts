@@ -16,7 +16,7 @@ import { UserController } from './user.controller';
   imports: [
     ClientsModule.register([
       {
-        name: 'BOARD_SERVICE',
+        name: MICROSERVICE_OPTIONS.BOARD.name,
         transport: MICROSERVICE_OPTIONS.BOARD.transport,
         options: MICROSERVICE_OPTIONS.BOARD.options,
       },

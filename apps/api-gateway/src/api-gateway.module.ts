@@ -10,7 +10,7 @@ import { UserModule } from './user/user.module';
   imports: [
     ClientsModule.register([
       {
-        name: 'REDIS_CACHE_SERVICE',
+        name: MICROSERVICE_OPTIONS.REDIS_CACHE.name,
         transport: MICROSERVICE_OPTIONS.REDIS_CACHE.transport,
         options: MICROSERVICE_OPTIONS.REDIS_CACHE.options,
       },
