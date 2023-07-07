@@ -1,6 +1,6 @@
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { redisStore } from 'cache-manager-redis-store';
 import { DelRedisCommandHandler } from './command/del-redis-command.handler';
@@ -12,7 +12,7 @@ import { RedisCacheController } from './redis-cache.controller';
   imports: [
     ConfigModule.forRoot(),
     CacheModule.registerAsync({
-      useFactory: async (configService: ConfigService) => {
+      useFactory: async () => {
         const store = await redisStore({
           socket: {
             host: process.env.REDIS_HOST,
