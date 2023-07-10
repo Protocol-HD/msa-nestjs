@@ -19,17 +19,13 @@ export class UpdateUserCommandHandler
   async execute(command: UpdateUserCommand): Promise<User> {
     const { id, name, password, role } = command;
 
-    let user = await this.prismaService.user.findUnique({ where: { id } });
-    user = {
-      ...user,
-      ...(name && { name }),
-      ...(role && { role }),
-      ...(password && { password: await argon2.hash(password) }),
-    };
-
-    await this.prismaService.user.update({
+    const user = await this.prismaService.user.update({
       where: { id },
-      data: user,
+      data: {
+        ...(name && { name }),
+        ...(role && { role }),
+        ...(password && { password: await argon2.hash(password) }),
+      },
     });
 
     if (name) {

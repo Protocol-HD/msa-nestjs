@@ -14,18 +14,13 @@ export class UpdateBoardCommandHandler
   async execute(command: UpdateBoardCommand): Promise<Board> {
     const { id, title, content, author } = command;
 
-    let board = await this.prismaService.board.findUnique({ where: { id } });
-
-    board = {
-      ...board,
-      ...(title && { title }),
-      ...(content && { content }),
-      ...(author && { author }),
-    };
-
-    await this.prismaService.board.update({
+    const board = await this.prismaService.board.update({
       where: { id },
-      data: board,
+      data: {
+        ...(title && { title }),
+        ...(content && { content }),
+        ...(author && { author }),
+      },
     });
 
     return board;
