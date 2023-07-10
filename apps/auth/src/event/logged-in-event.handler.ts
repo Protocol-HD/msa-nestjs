@@ -5,7 +5,7 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { RefreshTokenStoreEvent } from './refresh-token-store.event';
 
 @EventsHandler(RefreshTokenStoreEvent)
-export class LoginEventHandler
+export class LoggedInEventHandler
   implements IEventHandler<RefreshTokenStoreEvent>
 {
   constructor(

@@ -3,7 +3,7 @@ import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { Board } from 'libs/prisma/boardClient';
 import { CreateBoardCommand } from './command/create-board.command';
-import { UpdateBoardAuthorEvent } from './event/update-board-author.event';
+import { UpdatedBoardAuthorEvent } from './event/updated-board-author.event';
 import { GetBoardsQuery } from './query/get-boards.query';
 
 @Controller()
@@ -29,8 +29,8 @@ export class BoardController {
 
   // Zero-Payload Event 예제로 사용하기 위해 userId만 전달받음
   @EventPattern({ cmd: 'updateBoardAuthor' })
-  async updateAuthorBoard(data: UpdateBoardAuthorEvent): Promise<void> {
+  async updateAuthorBoard(data: UpdatedBoardAuthorEvent): Promise<void> {
     const { userId } = data;
-    return await this.eventBus.publish(new UpdateBoardAuthorEvent(userId));
+    return await this.eventBus.publish(new UpdatedBoardAuthorEvent(userId));
   }
 }

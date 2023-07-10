@@ -5,7 +5,7 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
 import { UpdateUserCommandHandler } from './command/update-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
-import { UpdateUserEventHandler } from './event/update-user-event.handler';
+import { UpdatedUserEventHandler } from './event/updated-user-event.handler';
 import { PrismaService } from './prisma.service';
 import { GetUserByIdQueryHandler } from './query/get-user-by-id-query.handler';
 import { GetUserQueryHandler } from './query/get-user-query.handler';
@@ -32,7 +32,7 @@ import { UserController } from './user.controller';
     GetUserQueryHandler,
     GetUserByIdQueryHandler,
     UpdateUserCommandHandler,
-    UpdateUserEventHandler,
+    UpdatedUserEventHandler,
   ],
 })
 export class UserModule {}

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import * as argon2 from 'argon2';
 import { User } from 'libs/prisma/userClient';
-import { UpdateUserNameEvent } from '../event/update-user-name.event';
+import { UpdatedUserNameEvent } from '../event/updated-user-name.event';
 import { PrismaService } from '../prisma.service';
 import { UpdateUserCommand } from './update-user.command';
 
@@ -33,7 +33,7 @@ export class UpdateUserCommandHandler
     });
 
     if (name) {
-      this.eventBus.publish(new UpdateUserNameEvent(id));
+      this.eventBus.publish(new UpdatedUserNameEvent(id));
     }
 
     return user;

@@ -5,11 +5,11 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma.service';
-import { UpdateBoardAuthorEvent } from './update-board-author.event';
+import { UpdatedBoardAuthorEvent } from './updated-board-author.event';
 
-@EventsHandler(UpdateBoardAuthorEvent)
-export class UpdateBoardEventHandler
-  implements IEventHandler<UpdateBoardAuthorEvent>
+@EventsHandler(UpdatedBoardAuthorEvent)
+export class UpdatedBoardEventHandler
+  implements IEventHandler<UpdatedBoardAuthorEvent>
 {
   constructor(
     private readonly prismaService: PrismaService,
@@ -17,9 +17,9 @@ export class UpdateBoardEventHandler
     private readonly userClient: ClientProxy,
   ) {}
 
-  async handle(event: UpdateBoardAuthorEvent) {
+  async handle(event: UpdatedBoardAuthorEvent) {
     switch (event.name) {
-      case UpdateBoardAuthorEvent.name:
+      case UpdatedBoardAuthorEvent.name:
         // Zero-Payload Event 예제로 사용하기 위해 전달받은 userId로 User 조회
         const observableData = this.userClient.send(
           { cmd: 'getUserById' },

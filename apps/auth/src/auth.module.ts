@@ -6,7 +6,7 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthController } from './auth.controller';
 import { CreateAccessTokenCommandHandler } from './command/create-access-token-command.handler';
 import { LoginCommandHandler } from './command/login-command.handler';
-import { LoginEventHandler } from './event/login-event.handler';
+import { LoggedInEventHandler } from './event/logged-in-event.handler';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { LoginEventHandler } from './event/login-event.handler';
   providers: [
     LoginCommandHandler,
     CreateAccessTokenCommandHandler,
-    LoginEventHandler,
+    LoggedInEventHandler,
   ],
 })
 export class AuthModule {}

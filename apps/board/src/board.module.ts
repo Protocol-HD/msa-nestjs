@@ -5,7 +5,7 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { BoardController } from './board.controller';
 import { CreateBoardCommandHandler } from './command/create-board-command.handler';
 import { UpdateBoardCommandHandler } from './command/update-board-command.handler';
-import { UpdateBoardEventHandler } from './event/update-board-event.handler';
+import { UpdatedBoardEventHandler } from './event/updated-board-event.handler';
 import { PrismaService } from './prisma.service';
 import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
 
@@ -26,7 +26,7 @@ import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
     CreateBoardCommandHandler,
     GetBoardsQueryHandler,
     UpdateBoardCommandHandler,
-    UpdateBoardEventHandler,
+    UpdatedBoardEventHandler,
   ],
 })
 export class BoardModule {}
