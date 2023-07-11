@@ -26,7 +26,7 @@ export class CreateUserCommandHandler
       role,
     };
 
-    const createdUser = await this.userRepository.create(data);
+    const createdUser = await this.userRepository.create({ data: data });
 
     this.eventBus.publish(new CreateUserEvent());
 

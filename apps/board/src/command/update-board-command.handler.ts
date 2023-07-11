@@ -14,14 +14,14 @@ export class UpdateBoardCommandHandler
   async execute(command: UpdateBoardCommand): Promise<Board> {
     const { id, title, content, author } = command;
 
-    const board = await this.boardRepository.update(
-      { id },
-      {
+    const board = await this.boardRepository.update({
+      where: { id },
+      data: {
         ...(title && { title }),
         ...(content && { content }),
         ...(author && { author }),
       },
-    );
+    });
 
     return board;
   }

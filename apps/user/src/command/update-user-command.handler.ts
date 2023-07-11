@@ -19,14 +19,14 @@ export class UpdateUserCommandHandler
   async execute(command: UpdateUserCommand): Promise<User> {
     const { id, name, password, role } = command;
 
-    const user = await this.userRepository.update(
-      { id },
-      {
+    const user = await this.userRepository.update({
+      where: { id },
+      data: {
         ...(name && { name }),
         ...(role && { role }),
         ...(password && { password: await argon2.hash(password) }),
       },
-    );
+    });
 
     if (name) {
       this.eventBus.publish(new UpdatedUserNameEvent(id));

@@ -11,6 +11,6 @@ export class GetUserByIdQueryHandler
 
   async execute(query: GetUserByIdQuery): Promise<User> {
     console.log('GetUserByIdQueryHandler', query);
-    return await this.userRepository.findOneById({ id: query.id });
+    return await this.userRepository.findOneById({ where: { id: query.id } });
   }
 }

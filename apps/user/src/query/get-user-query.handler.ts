@@ -8,6 +8,8 @@ export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(query: GetUserQuery): Promise<User> {
-    return await this.userRepository.findOneBy({ email: query.email });
+    return await this.userRepository.findOneBy({
+      where: { email: query.email },
+    });
   }
 }

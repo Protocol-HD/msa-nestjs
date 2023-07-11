@@ -33,7 +33,7 @@ export class CreateBoardCommandHandler
       author: user.name,
     };
 
-    const createdBoard = await this.boardRepository.create(data);
+    const createdBoard = await this.boardRepository.create({ data: data });
 
     return createdBoard;
   }
