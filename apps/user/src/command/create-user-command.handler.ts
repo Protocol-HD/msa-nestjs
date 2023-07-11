@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import * as argon2 from 'argon2';
-import { CreateUserEvent } from '../event/create-user.event';
-import { PrismaService } from '../prisma.service';
-import { CreateUserCommand } from './create-user.command';
 import { Prisma, User } from 'libs/prisma/userClient';
+import { CreateUserEvent } from '../event/create-user.event';
+import { UserRepository } from '../repository/user.repository';
+import { CreateUserCommand } from './create-user.command';
 
 @Injectable()
 @CommandHandler(CreateUserCommand)
@@ -12,7 +12,7 @@ export class CreateUserCommandHandler
   implements ICommandHandler<CreateUserCommand>
 {
   constructor(
-    private readonly prismaService: PrismaService,
+    private readonly userRepository: UserRepository,
     private readonly eventBus: EventBus,
   ) {}
 
@@ -26,7 +26,7 @@ export class CreateUserCommandHandler
       role,
     };
 
-    const createdUser = await this.prismaService.user.create({ data });
+    const createdUser = await this.userRepository.create(data);
 
     this.eventBus.publish(new CreateUserEvent());
 

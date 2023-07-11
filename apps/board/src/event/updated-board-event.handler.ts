@@ -4,7 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
-import { PrismaService } from '../prisma.service';
+import { BoardRepository } from '../repository/board.repository';
 import { UpdatedBoardAuthorEvent } from './updated-board-author.event';
 
 @EventsHandler(UpdatedBoardAuthorEvent)
@@ -12,7 +12,7 @@ export class UpdatedBoardEventHandler
   implements IEventHandler<UpdatedBoardAuthorEvent>
 {
   constructor(
-    private readonly prismaService: PrismaService,
+    private readonly boardRepository: BoardRepository,
     @Inject(MICROSERVICE_OPTIONS.USER.name)
     private readonly userClient: ClientProxy,
   ) {}
@@ -29,10 +29,10 @@ export class UpdatedBoardEventHandler
         const user: User = await firstValueFrom(observableData);
 
         // User 조회 결과로 Board의 author를 업데이트
-        await this.prismaService.board.updateMany({
-          where: { userId: event.userId },
-          data: { author: user.name },
-        });
+        await this.boardRepository.updateAll(
+          { userId: event.userId },
+          { author: user.name },
+        );
         break;
       default:
         break;

@@ -1,15 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { User } from 'libs/prisma/userClient';
-import { PrismaService } from '../prisma.service';
+import { UserRepository } from '../repository/user.repository';
 import { GetUserQuery } from './get-user.query';
 
 @QueryHandler(GetUserQuery)
 export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async execute(query: GetUserQuery): Promise<User> {
-    return await this.prismaService.user.findFirst({
-      where: { email: query.email },
-    });
+    return await this.userRepository.findOneBy({ email: query.email });
   }
 }

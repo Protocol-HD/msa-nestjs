@@ -5,7 +5,7 @@ import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Board, Prisma } from 'libs/prisma/boardClient';
 import { User } from 'libs/prisma/userClient';
 import { firstValueFrom } from 'rxjs';
-import { PrismaService } from '../prisma.service';
+import { BoardRepository } from '../repository/board.repository';
 import { CreateBoardCommand } from './create-board.command';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class CreateBoardCommandHandler
   implements ICommandHandler<CreateBoardCommand>
 {
   constructor(
-    private readonly prismaService: PrismaService,
+    private readonly boardRepository: BoardRepository,
     @Inject(MICROSERVICE_OPTIONS.USER.name)
     private readonly userClient: ClientProxy,
   ) {}
@@ -33,7 +33,7 @@ export class CreateBoardCommandHandler
       author: user.name,
     };
 
-    const createdBoard = await this.prismaService.board.create({ data });
+    const createdBoard = await this.boardRepository.create(data);
 
     return createdBoard;
   }

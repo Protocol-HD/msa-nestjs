@@ -6,8 +6,9 @@ import { BoardController } from './board.controller';
 import { CreateBoardCommandHandler } from './command/create-board-command.handler';
 import { UpdateBoardCommandHandler } from './command/update-board-command.handler';
 import { UpdatedBoardEventHandler } from './event/updated-board-event.handler';
-import { PrismaService } from './prisma.service';
 import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
+import { BoardRepository } from './repository/board.repository';
+import { PrismaService } from './repository/prisma.service';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GetBoardsQueryHandler } from './query/get-boards-query.handler';
   controllers: [BoardController],
   providers: [
     PrismaService,
+    BoardRepository,
     CreateBoardCommandHandler,
     GetBoardsQueryHandler,
     UpdateBoardCommandHandler,

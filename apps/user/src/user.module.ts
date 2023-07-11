@@ -6,10 +6,11 @@ import { CreateUserCommandHandler } from './command/create-user-command.handler'
 import { UpdateUserCommandHandler } from './command/update-user-command.handler';
 import { CreateUserEventHandler } from './event/create-user-event.handler';
 import { UpdatedUserEventHandler } from './event/updated-user-event.handler';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './repository/prisma.service';
 import { GetUserByIdQueryHandler } from './query/get-user-by-id-query.handler';
 import { GetUserQueryHandler } from './query/get-user-query.handler';
 import { GetUsersQueryHandler } from './query/get-users-query.handler';
+import { UserRepository } from './repository/user.repository';
 import { UserController } from './user.controller';
 
 @Module({
@@ -26,6 +27,7 @@ import { UserController } from './user.controller';
   controllers: [UserController],
   providers: [
     PrismaService,
+    UserRepository,
     CreateUserCommandHandler,
     CreateUserEventHandler,
     GetUsersQueryHandler,
