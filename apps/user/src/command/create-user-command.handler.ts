@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import * as argon2 from 'argon2';
 import { Prisma, User } from 'libs/prisma/userClient';
-import { CreateUserEvent } from '../event/create-user.event';
+import { CreatedUserEvent } from '../event/created-user.event';
 import { UserRepository } from '../repository/user.repository';
 import { CreateUserCommand } from './create-user.command';
 
@@ -28,7 +28,7 @@ export class CreateUserCommandHandler
 
     const createdUser = await this.userRepository.create({ data: data });
 
-    this.eventBus.publish(new CreateUserEvent());
+    this.eventBus.publish(new CreatedUserEvent());
 
     return createdUser;
   }

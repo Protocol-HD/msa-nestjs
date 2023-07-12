@@ -4,7 +4,7 @@ import { ClientsModule } from '@nestjs/microservices';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { CreateUserCommandHandler } from './command/create-user-command.handler';
 import { UpdateUserCommandHandler } from './command/update-user-command.handler';
-import { CreateUserEventHandler } from './event/create-user-event.handler';
+import { CreatedUserEventHandler } from './event/created-user-event.handler';
 import { UpdatedUserEventHandler } from './event/updated-user-event.handler';
 import { PrismaService } from './repository/prisma.service';
 import { GetUserByIdQueryHandler } from './query/get-user-by-id-query.handler';
@@ -29,7 +29,7 @@ import { UserController } from './user.controller';
     PrismaService,
     UserRepository,
     CreateUserCommandHandler,
-    CreateUserEventHandler,
+    CreatedUserEventHandler,
     GetUsersQueryHandler,
     GetUserQueryHandler,
     GetUserByIdQueryHandler,
