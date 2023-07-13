@@ -50,14 +50,14 @@ npm run start:dev redis-cache
 ---
 ## 로컬 Docker image build 스크립트(bash)
 ```
-sh local_build.sh
+sh docker_build.sh
 ```
 
 ---
 ## 로컬 Docker 전체 run/stop 스크립트 (bash)
 ```
-sh local_docker_run.sh
-sh local_docker_stop.sh
+sh docker_run.sh
+sh docker_stop.sh
 ```
 
 ---

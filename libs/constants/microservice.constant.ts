@@ -2,20 +2,21 @@ import { Transport } from '@nestjs/microservices';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
-export const MICROSERVICE_OPTIONS = {
+export const GATEWAY_OPTIONS = {
   API_GATEWAY: {
-    name: 'API_GATEWAY_SERVICE',
-    transport: Transport.TCP as number,
-    options: {
-      port: 3000,
-      host: isLocal ? 'localhost' : 'api-gateway',
-    },
+    port: isLocal ? 3000 : 3000,
   },
+  GRAPHQL_GATEWAY: {
+    port: isLocal ? 4000 : 3000,
+  },
+};
+
+export const MICROSERVICE_OPTIONS = {
   USER: {
     name: 'USER_SERVICE',
     transport: Transport.TCP as number,
     options: {
-      port: 3001,
+      port: isLocal ? 3001 : 3000,
       host: isLocal ? 'localhost' : 'user',
     },
   },
@@ -23,7 +24,7 @@ export const MICROSERVICE_OPTIONS = {
     name: 'BOARD_SERVICE',
     transport: Transport.TCP as number,
     options: {
-      port: 3002,
+      port: isLocal ? 3002 : 3000,
       host: isLocal ? 'localhost' : 'board',
     },
   },
@@ -31,7 +32,7 @@ export const MICROSERVICE_OPTIONS = {
     name: 'AUTH_SERVICE',
     transport: Transport.TCP as number,
     options: {
-      port: 3003,
+      port: isLocal ? 3003 : 3000,
       host: isLocal ? 'localhost' : 'auth',
     },
   },
@@ -39,16 +40,8 @@ export const MICROSERVICE_OPTIONS = {
     name: 'REDIS_CACHE_SERVICE',
     transport: Transport.TCP as number,
     options: {
-      port: 3004,
+      port: isLocal ? 3004 : 3000,
       host: isLocal ? 'localhost' : 'redis-cache',
-    },
-  },
-  GRAPHQL_GATEWAY: {
-    name: 'GRAPHQL_GATEWAY_SERVICE',
-    transport: Transport.TCP as number,
-    options: {
-      port: 4000,
-      host: isLocal ? 'localhost' : 'graphql-gateway',
     },
   },
 };
