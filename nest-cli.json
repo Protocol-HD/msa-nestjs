@@ -63,6 +63,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/redis-cache/tsconfig.app.json"
       }
+    },
+    "oauth": {
+      "type": "application",
+      "root": "apps/oauth",
+      "entryFile": "main",
+      "sourceRoot": "apps/oauth/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/oauth/tsconfig.app.json"
+      }
     }
   }
 }

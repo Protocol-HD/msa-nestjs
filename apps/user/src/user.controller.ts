@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessagePattern } from '@nestjs/microservices';
+import { User } from 'libs/prisma/userClient';
 import { CreateUserCommand } from './command/create-user.command';
 import { UpdateUserCommand } from './command/update-user.command';
+import { GetUserByIdQuery } from './query/get-user-by-id.query';
 import { GetUserQuery } from './query/get-user.query';
 import { GetUsersQuery } from './query/get-users.query';
-import { User } from 'libs/prisma/userClient';
-import { GetUserByIdQuery } from './query/get-user-by-id.query';
 
 @Controller()
 export class UserController {
@@ -25,6 +25,11 @@ export class UserController {
     return await this.queryBus.execute(new GetUserByIdQuery(id));
   }
 
+  @MessagePattern({ cmd: 'getIsExistUser' })
+  async getIsExistUser(email: string): Promise<boolean> {
+    return await this.queryBus.execute(new GetUserQuery(email));
+  }
+
   @MessagePattern({ cmd: 'getUsers' })
   async getUsers(): Promise<User[]> {
     return await this.queryBus.execute(new GetUsersQuery());
@@ -32,9 +37,9 @@ export class UserController {
 
   @MessagePattern({ cmd: 'createUser' })
   async createUser(data: CreateUserCommand): Promise<User> {
-    const { name, email, password, role } = data;
+    const { name, email, password, role, loginType } = data;
     return await this.commandBus.execute(
-      new CreateUserCommand(name, email, password, role),
+      new CreateUserCommand(name, email, password, role, loginType),
     );
   }
 

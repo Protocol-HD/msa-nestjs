@@ -4,6 +4,7 @@ import { JwtStrategy } from 'libs/auth/jwt.strategy';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthModule } from './auth/auth.module';
 import { BoardModule } from './board/board.module';
+import { OauthModule } from './oauth/oauth.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     AuthModule,
     BoardModule,
+    OauthModule,
   ],
   providers: [JwtStrategy],
 })

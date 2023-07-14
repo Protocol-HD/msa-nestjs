@@ -9,9 +9,10 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(30)
-  email    String @db.VarChar(60)
-  password String @db.VarChar(255)
-  role     Int
+  id        Int    @id @default(autoincrement())
+  loginType String @db.VarChar(10)
+  name      String @db.VarChar(30)
+  email     String @db.VarChar(60)
+  password  String @db.VarChar(255)
+  role      Int
 }

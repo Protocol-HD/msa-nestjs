@@ -17,13 +17,15 @@ export class CreateUserCommandHandler
   ) {}
 
   async execute(command: CreateUserCommand): Promise<User> {
-    const { name, email, password, role } = command;
+    const { name, email, password, role, loginType } = command;
+    console.log(command);
 
     const data: Prisma.UserCreateInput = {
       name,
       email,
       password: await argon2.hash(password),
       role,
+      loginType: loginType ?? 'EMAIL',
     };
 
     const createdUser = await this.userRepository.create({ data: data });

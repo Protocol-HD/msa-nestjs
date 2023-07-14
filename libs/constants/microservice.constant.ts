@@ -36,11 +36,19 @@ export const MICROSERVICE_OPTIONS = {
       host: isLocal ? 'localhost' : 'auth',
     },
   },
+  OAUTH: {
+    name: 'OAUTH_SERVICE',
+    transport: Transport.TCP as number,
+    options: {
+      port: isLocal ? 3004 : 3000,
+      host: isLocal ? 'localhost' : 'oauth',
+    },
+  },
   REDIS_CACHE: {
     name: 'REDIS_CACHE_SERVICE',
     transport: Transport.TCP as number,
     options: {
-      port: isLocal ? 3004 : 3000,
+      port: isLocal ? 3005 : 3000,
       host: isLocal ? 'localhost' : 'redis-cache',
     },
   },

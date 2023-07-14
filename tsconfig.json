@@ -18,8 +18,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/repository": ["libs/repositories/src"],
-      "@app/repository/*": ["libs/repositories/src/*"]
+      "@app/repository": [
+        "libs/repositories/src"
+      ],
+      "@app/repository/*": [
+        "libs/repositories/src/*"
+      ]
     }
   }
 }

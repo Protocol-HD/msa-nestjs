@@ -11,8 +11,10 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'login' })
   async login(input: LoginCommand): Promise<LoginTokens> {
-    const { email, password } = input;
-    return await this.commandBus.execute(new LoginCommand(email, password));
+    const { email, password, loginType } = input;
+    return await this.commandBus.execute(
+      new LoginCommand(email, password, loginType),
+    );
   }
 
   @MessagePattern({ cmd: 'createAccessToken' })

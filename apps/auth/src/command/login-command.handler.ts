@@ -32,13 +32,23 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
       return new HttpException('NOT_EXIST_EMAIL', HttpStatus.NOT_FOUND);
     }
 
-    const isCorrectPassword = await argon2.verify(
-      user.password,
-      command.password,
-    );
+    switch (user.loginType) {
+      case null:
+      case undefined:
+      case 'EMAIL':
+        const isCorrectPassword = await argon2.verify(
+          user.password,
+          command.password,
+        );
 
-    if (!isCorrectPassword) {
-      return new HttpException('INVALID_PASSWORD', HttpStatus.BAD_REQUEST);
+        if (!isCorrectPassword) {
+          return new HttpException('INVALID_PASSWORD', HttpStatus.BAD_REQUEST);
+        }
+        break;
+      case command.loginType:
+        break;
+      default:
+        return new HttpException('INVALID_LOGIN_TYPE', HttpStatus.BAD_REQUEST);
     }
 
     const payload = { email: user.email, role: user.role, id: user.id };
