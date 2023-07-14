@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { Observable } from 'rxjs';
 import { LoginTokens } from '../auth/dto/login-tokens.dto';
-import { KakaoLoginDto } from './dto/kakao-login.dto';
+import { OauthLoginDto } from './dto/oauth-login.dto';
 
 @Controller('oauth')
 export class OauthController {
@@ -13,7 +13,12 @@ export class OauthController {
   ) {}
 
   @Post('/kakao/login')
-  kakaoLogin(@Body() input: KakaoLoginDto): Observable<LoginTokens> {
+  kakaoLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
     return this.oauthClient.send({ cmd: 'kakaoLogin' }, input);
+  }
+
+  @Post('/naver/login')
+  naverLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
+    return this.oauthClient.send({ cmd: 'naverLogin' }, input);
   }
 }

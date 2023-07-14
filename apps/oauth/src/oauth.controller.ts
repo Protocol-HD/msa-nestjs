@@ -1,14 +1,23 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { KakaoLoginDto } from './dto/kakao-login.dto';
+import { OauthLoginDto } from './dto/oauth-login.dto';
 import { KakaoService } from './kakao/kakao.service';
+import { NaverService } from './naver/naver.service';
 
 @Controller()
 export class OauthController {
-  constructor(private readonly kakaoService: KakaoService) {}
+  constructor(
+    private readonly kakaoService: KakaoService,
+    private readonly naverService: NaverService,
+  ) {}
 
   @MessagePattern({ cmd: 'kakaoLogin' })
-  kakaoLogin(input: KakaoLoginDto): any {
+  kakaoLogin(input: OauthLoginDto): any {
     return this.kakaoService.kakaoLogin(input);
+  }
+
+  @MessagePattern({ cmd: 'naverLogin' })
+  naverLogin(input: OauthLoginDto): any {
+    return this.naverService.naverLogin(input);
   }
 }

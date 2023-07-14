@@ -3,7 +3,9 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule } from '@nestjs/microservices';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { KakaoLoggedInEventHandler } from './event/kakao-logged-in-event.handler';
+import { NaverLoggedInEventHandler } from './event/naver-logged-in-event.handler';
 import { KakaoService } from './kakao/kakao.service';
+import { NaverService } from './naver/naver.service';
 import { OauthController } from './oauth.controller';
 import { OauthService } from './oauth.service';
 
@@ -23,8 +25,9 @@ import { OauthService } from './oauth.service';
     ]),
     CqrsModule,
     KakaoLoggedInEventHandler,
+    NaverLoggedInEventHandler,
   ],
   controllers: [OauthController],
-  providers: [OauthService, KakaoService],
+  providers: [OauthService, KakaoService, NaverService],
 })
 export class OauthModule {}

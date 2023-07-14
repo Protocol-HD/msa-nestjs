@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import axios from 'axios';
 import { OAUTH_URIS } from 'libs/constants/oauth.constant';
-import { KakaoLoginDto } from '../dto/kakao-login.dto';
-import { KakaoUserInfoDto } from '../dto/kakao-user-info.dto';
+import * as uuid from 'uuid';
 import { LoginTokens } from '../dto/login-tokens.dto';
+import { OauthLoginDto } from '../dto/oauth-login.dto';
+import { OauthUserInfoDto } from '../dto/oauth-user-info.dto';
 import { KakaoLoggedInEvent } from '../event/kakao-logged-in.event';
 import { OauthService } from '../oauth.service';
 
@@ -15,7 +16,7 @@ export class KakaoService {
     private readonly oauthService: OauthService,
   ) {}
 
-  async kakaoLogin(input: KakaoLoginDto): Promise<LoginTokens> {
+  async kakaoLogin(input: OauthLoginDto): Promise<LoginTokens> {
     const { code, redirectUri, clientId } = input;
 
     // 카카오 로그인을 통해 받은 code를 이용해 access token을 받아온다.
@@ -37,7 +38,7 @@ export class KakaoService {
     if (!isSignedUp) {
       await this.oauthService.signUp({
         email: userInfo.email,
-        password: userInfo.id.toString(),
+        password: uuid.v4(),
         name: userInfo.nickname,
         role: 1,
         loginType: 'KAKAO',
@@ -47,7 +48,7 @@ export class KakaoService {
     // 카카오 로그인을 통해 로그인을 진행한다.
     const loginTokens = await this.oauthService.login({
       email: userInfo.email,
-      password: userInfo.id.toString(),
+      password: null,
       loginType: 'KAKAO',
     });
 
@@ -68,14 +69,14 @@ export class KakaoService {
     return res.data.access_token;
   }
 
-  async kakaoGetUserInfo(accessToken: string): Promise<KakaoUserInfoDto> {
+  async kakaoGetUserInfo(accessToken: string): Promise<OauthUserInfoDto> {
     const res = await axios.get(OAUTH_URIS.KAKAO.GET_USER_INFO, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    const user: KakaoUserInfoDto = {
+    const user: OauthUserInfoDto = {
       id: res.data?.id,
       email: res.data?.kakao_account?.email,
       nickname: res.data?.properties?.nickname,
