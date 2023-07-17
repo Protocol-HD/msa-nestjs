@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { OauthLoginDto } from './dto/oauth-login.dto';
+import { GoogleService } from './google/google.service';
 import { KakaoService } from './kakao/kakao.service';
 import { NaverService } from './naver/naver.service';
 
@@ -9,6 +10,7 @@ export class OauthController {
   constructor(
     private readonly kakaoService: KakaoService,
     private readonly naverService: NaverService,
+    private readonly googleService: GoogleService,
   ) {}
 
   @MessagePattern({ cmd: 'kakaoLogin' })
@@ -19,5 +21,10 @@ export class OauthController {
   @MessagePattern({ cmd: 'naverLogin' })
   naverLogin(input: OauthLoginDto): any {
     return this.naverService.naverLogin(input);
+  }
+
+  @MessagePattern({ cmd: 'googleLogin' })
+  googleLogin(input: OauthLoginDto): any {
+    return this.googleService.googleLogin(input);
   }
 }

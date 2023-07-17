@@ -21,4 +21,9 @@ export class OauthController {
   naverLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
     return this.oauthClient.send({ cmd: 'naverLogin' }, input);
   }
+
+  @Post('/google/login')
+  googleLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
+    return this.oauthClient.send({ cmd: 'googleLogin' }, input);
+  }
 }
