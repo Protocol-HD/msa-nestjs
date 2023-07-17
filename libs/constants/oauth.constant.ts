@@ -13,4 +13,8 @@ export const OAUTH_URIS = {
     GET_TOKEN: 'https://oauth2.googleapis.com/token',
     GET_USER_INFO: 'https://www.googleapis.com/oauth2/v3/userinfo',
   },
+  TWITTER: {
+    GET_TOKEN: 'https://api.twitter.com/2/oauth2/token',
+    GET_USER_INFO: 'https://api.twitter.com/2/users/me',
+  },
 };

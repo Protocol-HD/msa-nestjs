@@ -85,7 +85,7 @@ export class GoogleService {
     const user: OauthUserInfoDto = {
       id: res.data?.sub,
       email: res.data?.email,
-      nickname: res.data?.name ?? '',
+      nickname: res.data?.name ?? '', // 구글에서 닉네임을 제공하지 않는 경우가 있어서 ?? '' 처리
     };
 
     return user;

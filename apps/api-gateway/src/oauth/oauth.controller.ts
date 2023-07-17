@@ -26,4 +26,9 @@ export class OauthController {
   googleLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
     return this.oauthClient.send({ cmd: 'googleLogin' }, input);
   }
+
+  @Post('/twitter/login')
+  twitterLogin(@Body() input: OauthLoginDto): Observable<LoginTokens> {
+    return this.oauthClient.send({ cmd: 'twitterLogin' }, input);
+  }
 }

@@ -4,6 +4,7 @@ import { OauthLoginDto } from './dto/oauth-login.dto';
 import { GoogleService } from './google/google.service';
 import { KakaoService } from './kakao/kakao.service';
 import { NaverService } from './naver/naver.service';
+import { TwitterService } from './twitter/twitter.service';
 
 @Controller()
 export class OauthController {
@@ -11,6 +12,7 @@ export class OauthController {
     private readonly kakaoService: KakaoService,
     private readonly naverService: NaverService,
     private readonly googleService: GoogleService,
+    private readonly twitterService: TwitterService,
   ) {}
 
   @MessagePattern({ cmd: 'kakaoLogin' })
@@ -26,5 +28,10 @@ export class OauthController {
   @MessagePattern({ cmd: 'googleLogin' })
   googleLogin(input: OauthLoginDto): any {
     return this.googleService.googleLogin(input);
+  }
+
+  @MessagePattern({ cmd: 'twitterLogin' })
+  twitterLogin(input: OauthLoginDto): any {
+    return this.twitterService.twitterLogin(input);
   }
 }
