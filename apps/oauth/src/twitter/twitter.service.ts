@@ -78,6 +78,8 @@ export class TwitterService {
       },
     );
 
+    console.log(res);
+
     return res.data.access_token;
   }
 
@@ -92,7 +94,7 @@ export class TwitterService {
 
     const user: OauthUserInfoDto = {
       id: res.data?.data?.id,
-      email: res.data?.data?.email ?? res.data?.data?.name, // 트위터 OAuth에서는 이메일을 제공하지 않는다.
+      email: res.data?.data?.email ?? res.data?.data?.id, // 트위터 OAuth에서는 이메일을 제공하지 않는다.
       nickname: res.data?.data?.username,
     };
 
