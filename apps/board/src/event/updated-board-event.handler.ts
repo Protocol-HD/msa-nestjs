@@ -29,7 +29,7 @@ export class UpdatedBoardEventHandler
         const user: User = await firstValueFrom(observableData);
 
         // User 조회 결과로 Board의 author를 업데이트
-        await this.boardRepository.updateAll({
+        await this.boardRepository.updateAllBy({
           where: { userId: event.userId },
           data: { author: user.name },
         });

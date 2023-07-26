@@ -14,7 +14,7 @@ export class UpdateBoardCommandHandler
   async execute(command: UpdateBoardCommand): Promise<Board> {
     const { id, title, content, author } = command;
 
-    const board = await this.boardRepository.update({
+    const board = await this.boardRepository.updateBy({
       where: { id },
       data: {
         ...(title && { title }),

@@ -35,21 +35,21 @@ export class PrismaRepository<T> {
     });
   }
 
-  async update<T, D>(params: { where: { [key: string]: T }; data: D }) {
+  async updateBy<T, D>(params: { where: { [key: string]: T }; data: D }) {
     return await this.prismaService[this.entityName].update({
       where: params.where,
       data: params.data,
     });
   }
 
-  async updateAll<T, D>(params: { where: { [key: string]: T }; data: D }) {
+  async updateAllBy<T, D>(params: { where: { [key: string]: T }; data: D }) {
     return await this.prismaService[this.entityName].updateMany({
       where: params.where,
       data: params.data,
     });
   }
 
-  async delete<T>(params: { where: { [key: string]: T } }) {
+  async deleteBy<T>(params: { where: { [key: string]: T } }) {
     return await this.prismaService[this.entityName].delete({
       where: params.where,
     });
