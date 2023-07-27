@@ -23,6 +23,9 @@ export class ChatResolver {
 
   @Mutation(() => String)
   sendMessage(@Args('input') input: ChatDto) {
-    return this.chatClient.send<string>({ cmd: 'sendMessage' }, input);
+    return this.chatClient.send<string>(
+      { cmd: 'sendMessage', clientId: 'test' },
+      input,
+    );
   }
 }

@@ -7,7 +7,7 @@ import { ChatDto } from './dto/chat.dto';
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @MessagePattern({ cmd: 'sendMessage' })
+  @MessagePattern({ cmd: 'sendMessage', clientId: 'test' })
   async sendMessage(input: ChatDto) {
     return await this.chatService.sendMessage(input);
   }
