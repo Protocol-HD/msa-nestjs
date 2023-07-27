@@ -21,21 +21,25 @@ export class ChatService {
   }
 
   onModuleInit() {
-    this.subscriber.on('message', (channel, message) => {
+    this.subscriber.on('message', (channel, json) => {
+      console.log('channel', channel, 'json', json);
+      const { clientId, message } = JSON.parse(json);
       this.graphqlGatewayClient
-        .send({ cmd: 'receiveMessage' }, { channel, message })
+        .send({ cmd: 'receiveMessage', clientId }, { channel, message })
         .subscribe();
     });
   }
 
   async sendMessage(input: ChatDto) {
-    const { channel, message } = input;
+    const { channel, message, clientId } = input;
 
     if (!this.channels.includes(channel)) {
       this.channels.push(channel);
       await this.subscriber.subscribe(channel);
     }
 
-    return this.publisher.publish(channel, message);
+    const json = JSON.stringify({ clientId, message });
+
+    return this.publisher.publish(channel, json);
   }
 }

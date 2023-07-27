@@ -3,7 +3,10 @@ import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
 import { PubSub } from 'graphql-subscriptions';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
+import { v4 } from 'uuid';
 import { ChatDto } from './dto/chat.dto';
+
+export const CLIENT_ID = v4();
 
 @Resolver()
 export class ChatResolver {
@@ -23,9 +26,7 @@ export class ChatResolver {
 
   @Mutation(() => String)
   sendMessage(@Args('input') input: ChatDto) {
-    return this.chatClient.send<string>(
-      { cmd: 'sendMessage', clientId: 'test' },
-      input,
-    );
+    input.clientId = CLIENT_ID;
+    return this.chatClient.send<string>({ cmd: 'sendMessage' }, input);
   }
 }
