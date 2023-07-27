@@ -7,7 +7,12 @@ export const GATEWAY_OPTIONS = {
     port: isLocal ? 3000 : 3000,
   },
   GRAPHQL_GATEWAY: {
-    port: isLocal ? 4000 : 3000,
+    name: 'GRAPHQL_GATEWAY_SERVICE',
+    transport: Transport.TCP as number,
+    options: {
+      port: isLocal ? 4000 : 3000,
+      host: isLocal ? 'localhost' : 'graphql-gateway',
+    },
   },
 };
 
@@ -50,6 +55,14 @@ export const MICROSERVICE_OPTIONS = {
     options: {
       port: isLocal ? 3005 : 3000,
       host: isLocal ? 'localhost' : 'redis-cache',
+    },
+  },
+  CHAT: {
+    name: 'CHAT_SERVICE',
+    transport: Transport.TCP as number,
+    options: {
+      port: isLocal ? 3006 : 3000,
+      host: isLocal ? 'localhost' : 'chat',
     },
   },
 };

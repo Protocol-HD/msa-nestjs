@@ -6,6 +6,7 @@ import { JwtStrategy } from 'libs/auth/jwt.strategy';
 import { MICROSERVICE_OPTIONS } from 'libs/constants/microservice.constant';
 import { AuthModule } from './auth/auth.module';
 import { BoardModule } from './board/board.module';
+import { ChatModule } from './chat/chat.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -20,10 +21,14 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      subscriptions: {
+        'graphql-ws': true,
+      },
     }),
     UserModule,
     AuthModule,
     BoardModule,
+    ChatModule,
   ],
   providers: [JwtStrategy],
 })
