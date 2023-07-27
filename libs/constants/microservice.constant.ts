@@ -4,14 +4,16 @@ const isLocal = process.env.NODE_ENV === 'local';
 
 export const GATEWAY_OPTIONS = {
   API_GATEWAY: {
-    port: isLocal ? 3000 : 3000,
+    APP_PORT: isLocal ? 3000 : 3000,
   },
   GRAPHQL_GATEWAY: {
+    APP_PORT: isLocal ? 4000 : 3000,
     name: 'GRAPHQL_GATEWAY_SERVICE',
-    transport: Transport.TCP as number,
+    transport: Transport.REDIS as number,
     options: {
-      port: isLocal ? 4000 : 3000,
-      host: isLocal ? 'localhost' : 'graphql-gateway',
+      port: 16379,
+      host: isLocal ? 'localhost' : 'redis',
+      wildcards: true,
     },
   },
 };
@@ -59,10 +61,11 @@ export const MICROSERVICE_OPTIONS = {
   },
   CHAT: {
     name: 'CHAT_SERVICE',
-    transport: Transport.TCP as number,
+    transport: Transport.REDIS as number,
     options: {
-      port: isLocal ? 3006 : 3000,
-      host: isLocal ? 'localhost' : 'chat',
+      port: 16379,
+      host: isLocal ? 'localhost' : 'redis',
+      wildcards: true,
     },
   },
 };

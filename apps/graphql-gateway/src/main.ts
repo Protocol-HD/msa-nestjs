@@ -14,6 +14,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new RestErrorInterceptor());
   app.useGlobalInterceptors(new LoggingInterceptor());
   await app.startAllMicroservices();
-  await app.listen(GATEWAY_OPTIONS.GRAPHQL_GATEWAY.options.port);
+  await app.listen(GATEWAY_OPTIONS.GRAPHQL_GATEWAY.APP_PORT);
 }
 bootstrap();

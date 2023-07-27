@@ -1,5 +1,5 @@
 export class ChatDto {
-  clientId: string;
   channel: string;
+  name: string;
   message: string;
 }
