@@ -1,0 +1,8 @@
+pm2 start --name api-gateway "npm run start:dev api-gateway"
+pm2 start --name graphql-gateway "npm run start:dev graphql-gateway"
+pm2 start --name user "npm run start:dev user"
+pm2 start --name board "npm run start:dev board"
+pm2 start --name auth "npm run start:dev auth"
+pm2 start --name redis-cache "npm run start:dev redis-cache"
+pm2 start --name oauth "npm run start:dev oauth"
+pm2 start --name chat "npm run start:dev chat"
