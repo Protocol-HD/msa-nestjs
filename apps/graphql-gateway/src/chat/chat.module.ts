@@ -17,13 +17,13 @@ import { ChatResolver } from './chat.resolver';
         options: MICROSERVICE_OPTIONS.CHAT.options,
       },
     ]),
-    RedisModule.forRoot({
-      config: {
-        host: process.env.REDIS_HOST,
-        port: +process.env.REDIS_PORT,
-        password: process.env.REDIS_PASSWORD,
-      },
-    }),
+    // RedisModule.forRoot({
+    //   config: {
+    //     host: process.env.REDIS_HOST,
+    //     port: +process.env.REDIS_PORT,
+    //     password: process.env.REDIS_PASSWORD,
+    //   },
+    // }),
   ],
   controllers: [ChatController],
   providers: [ChatResolver, PubSub],

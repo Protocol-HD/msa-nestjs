@@ -11,9 +11,10 @@ export const GATEWAY_OPTIONS = {
     name: 'GRAPHQL_GATEWAY_SERVICE',
     transport: Transport.REDIS as number,
     options: {
-      port: 16379,
+      port: 6379,
       host: isLocal ? 'localhost' : 'redis',
       wildcards: true,
+      password: 'gudehd',
     },
   },
 };
@@ -63,9 +64,10 @@ export const MICROSERVICE_OPTIONS = {
     name: 'CHAT_SERVICE',
     transport: Transport.REDIS as number,
     options: {
-      port: 16379,
+      port: 6379,
       host: isLocal ? 'localhost' : 'redis',
       wildcards: true,
+      password: 'gudehd',
     },
   },
 };
